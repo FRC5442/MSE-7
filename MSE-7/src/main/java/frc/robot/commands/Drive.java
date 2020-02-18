@@ -7,18 +7,16 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.drive.Vector2d;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.SharedMethods;
 
-public class MotorTester extends CommandBase {
-  /**
-   * Creates a new MotorTester.
-   */
-  public MotorTester() {
+public class Drive extends CommandBase {
+
+  public Drive() {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.swerveGroup);
   }
 
   // Called when the command is initially scheduled.
@@ -29,8 +27,15 @@ public class MotorTester extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = SharedMethods.rpmToVelocity(100); //rpm -> degrees / 100ms
-    RobotContainer.testMotor.set(TalonFXControlMode.Velocity, speed);
+    Joystick driveStick = RobotContainer.xboxController1;
+
+    double leftX = driveStick.getRawAxis(0);
+    double leftY = driveStick.getRawAxis(1);
+
+    double rightX = driveStick.getRawAxis(4);
+
+    Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 2), leftY * Math.pow(Math.abs(leftY), 2));
+    RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 2));
   }
 
   // Called once the command ends or is interrupted.

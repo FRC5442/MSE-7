@@ -7,18 +7,20 @@
 
 package frc.robot.commands;
 
-import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
-import frc.robot.SharedMethods;
 
-public class MotorTester extends CommandBase {
+public class MoveHood extends CommandBase {
   /**
-   * Creates a new MotorTester.
+   * Creates a new MoveHood.
    */
-  public MotorTester() {
+
+  double distance;
+  
+  public MoveHood(double degrees) {
     // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.shooter);
+    distance = RobotContainer.hoodEncoder.getDistance() + degrees;
   }
 
   // Called when the command is initially scheduled.
@@ -29,18 +31,19 @@ public class MotorTester extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = SharedMethods.rpmToVelocity(100); //rpm -> degrees / 100ms
-    RobotContainer.testMotor.set(TalonFXControlMode.Velocity, speed);
+    double speed = (RobotContainer.hoodEncoder.getDistance() - distance) / 100;
+    RobotContainer.shooter.moveHood(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.shooter.moveHood(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(RobotContainer.hoodEncoder.getDistance() - distance) <= 5;
   }
 }

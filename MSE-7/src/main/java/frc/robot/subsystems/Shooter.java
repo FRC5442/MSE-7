@@ -13,18 +13,22 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase {
-  CANSparkMax shooterWheel;
-  CANSparkMax shooterHood;
   /**
    * Creates a new Shooter.
    */
+
+  CANSparkMax shooterWheel1, shooterWheel2;
+  CANSparkMax shooterHood;
+  
   public Shooter() {
-    shooterWheel = RobotContainer.shooterWheel;
+    shooterWheel1 = RobotContainer.shooterWheel1;
+    shooterWheel2 = RobotContainer.shooterWheel2;
     shooterHood = RobotContainer.shooterHood;
   }
 
   public void shoot(double speed) {
-    shooterWheel.set(speed);
+    shooterWheel1.set(speed);
+    shooterWheel2.set(-speed);
   }
 
   public void moveHood(double speed) {
