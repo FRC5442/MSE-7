@@ -67,10 +67,11 @@ public class RobotContainer {
   public static CANSparkMax shooterHood;
   public static CANSparkMax carouselMotor;
   public static CANSparkMax climberMotor;
-  public static CANSparkMax driveMotor1, driveMotor2;
-  public static CANSparkMax driveMotor3, driveMotor4;
-  public static CANSparkMax driveMotor5, driveMotor6;
-  public static CANSparkMax driveMotor7, driveMotor8;
+  
+  public static TalonFX driveMotor1, driveMotor2;
+  public static TalonFX driveMotor3, driveMotor4;
+  public static TalonFX driveMotor5, driveMotor6;
+  public static TalonFX driveMotor7, driveMotor8;
 
   public static TalonFX testMotor;
 

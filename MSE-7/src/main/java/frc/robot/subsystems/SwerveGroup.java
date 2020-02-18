@@ -16,28 +16,39 @@ import frc.robot.SharedMethods;
 
 public class SwerveGroup extends SubsystemBase {
   
+  SwerveModule frontRightModule;
   SwerveModule frontLeftModule;
+  SwerveModule backLeftModule;
   SwerveModule backRightModule;
 
   double convertedGyroAngle = 0;
 
   public SwerveGroup() {
+    frontRightModule = RobotContainer.frontRightModule;
     frontLeftModule = RobotContainer.frontLeftModule;
+    backLeftModule = RobotContainer.backLeftModule;
     backRightModule = RobotContainer.backRightModule;
   }
 
   public void moveCrab(Vector2d translation, double rotation) {
     double joystickAngle = (Math.atan2(translation.y, -translation.x) * (180/Math.PI)) + 180;
     if (Math.abs(translation.magnitude()) > Constants.JOYSTICK_DEAD_ZONE) {
+      frontRightModule.move(translation.magnitude(), joystickAngle);
       frontLeftModule.move(translation.magnitude(), joystickAngle);
+      backLeftModule.move(translation.magnitude(), joystickAngle);
       backRightModule.move(translation.magnitude(), joystickAngle);
     }
     else if (Math.abs(rotation) > Constants.JOYSTICK_DEAD_ZONE) {
       frontLeftModule.move(rotation, 225);
       backRightModule.move(rotation, 225);
+
+      frontRightModule.move(rotation, 45);
+      backLeftModule.move(rotation, 45);
     }
     else {
+      frontRightModule.stop();
       frontLeftModule.stop();
+      backLeftModule.stop();
       backRightModule.stop();
     }
   }
@@ -86,17 +97,23 @@ public class SwerveGroup extends SubsystemBase {
     if (backRightSpeed > maxSpeed) backRightSpeed = maxSpeed;
 
     if (Math.abs(translation.magnitude()) > Constants.JOYSTICK_DEAD_ZONE || Math.abs(rotation) > Constants.JOYSTICK_DEAD_ZONE) {
+      frontRightModule.move(frontRightSpeed, frontRightAngle);
       frontLeftModule.move(frontLeftSpeed, frontLeftAngle);
+      backLeftModule.move(backLeftSpeed, backLeftAngle);
       backRightModule.move(backRightSpeed, backRightAngle);
     }
     else {
+      frontRightModule.stop();
       frontLeftModule.stop();
+      backLeftModule.stop();
       backRightModule.stop();
     }
   }
 
   public void calibrate() {
+    frontRightModule.calibrate();
     frontLeftModule.calibrate();
+    backLeftModule.calibrate();
     backRightModule.calibrate();
   }
 
@@ -108,7 +125,9 @@ public class SwerveGroup extends SubsystemBase {
   }
 
   public void switchDriveState(Constants.DRIVE_STATE driveState) {
+    frontRightModule.switchTranslationMod(driveState.getValue());
     frontLeftModule.switchTranslationMod(driveState.getValue());
+    backLeftModule.switchTranslationMod(driveState.getValue());
     backRightModule.switchTranslationMod(driveState.getValue());
   }
 

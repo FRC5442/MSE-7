@@ -7,8 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANEncoder;
-import com.revrobotics.CANSparkMax;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,7 +19,7 @@ import frc.robot.SharedMethods;
 
 public class SwerveModule extends SubsystemBase {
 
-  CANSparkMax topGear, bottomGear;
+  TalonFX topGear, bottomGear;
   AnalogPotentiometer absEncoder;
   CANEncoder topEncoder, bottomEncoder;
   double currentAngle = 0.0;
@@ -38,7 +39,7 @@ public class SwerveModule extends SubsystemBase {
 
   String moduleID = "";
 
-  public SwerveModule(String moduleID, CANSparkMax topGear, CANSparkMax bottomGear, AnalogPotentiometer absEncoder, boolean inverted, double zeroOffset) {
+  public SwerveModule(TalonFX topGear, TalonFX bottomGear, AnalogPotentiometer absEncoder, boolean inverted, double zeroOffset) {
 
     this.moduleID = moduleID.toUpperCase();
 
@@ -47,9 +48,6 @@ public class SwerveModule extends SubsystemBase {
     this.topGear = topGear;
     this.bottomGear = bottomGear;
     this.absEncoder = absEncoder;
-
-    topEncoder = topGear.getEncoder();
-    bottomEncoder = bottomGear.getEncoder();
 
     if (inverted) {
       TRANSLATE_MOD *= -1;
@@ -151,10 +149,11 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void updateGearSpeeds() {
-    topGearSpeed = MathUtil.clamp(topGearSpeed, -1, 1);
-    bottomGearSpeed = MathUtil.clamp(bottomGearSpeed, -1, 1);
+    double MAX_RPM = 2000;
+    topGearSpeed = SharedMethods.rpmToVelocity(MAX_RPM * MathUtil.clamp(topGearSpeed, -1, 1));
+    bottomGearSpeed = SharedMethods.rpmToVelocity(MAX_RPM * MathUtil.clamp(bottomGearSpeed, -1, 1));
 
-    topGear.set(topGearSpeed);
-    bottomGear.set(bottomGearSpeed);
+    topGear.set(TalonFXControlMode.Velocity, topGearSpeed);
+    bottomGear.set(TalonFXControlMode.Velocity, bottomGearSpeed);
   }
 }
