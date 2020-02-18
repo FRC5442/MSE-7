@@ -23,8 +23,11 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CalibrateGyro;
 import frc.robot.commands.CarouselCommand;
 import frc.robot.commands.ClimberCommand;
+import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
+import frc.robot.commands.HighGear;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.LowGear;
 import frc.robot.commands.MotorTester;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.BackLeftModule;
@@ -59,7 +62,7 @@ public class RobotContainer {
   public static JoystickButton xboxController1B;
   public static JoystickButton xboxController1X;
   public static JoystickButton xboxController1Y;
-  public static JoystickButton xboxController1LBumper;
+  public static JoystickButton xboxController1LBumper, xboxController1RBumper;
 
   public static CANSparkMax intakeMotor;
   public static CANSparkMax shooterWheel1;
@@ -68,10 +71,10 @@ public class RobotContainer {
   public static CANSparkMax carouselMotor;
   public static CANSparkMax climberMotor;
   
-  public static TalonFX driveMotor1, driveMotor2;
-  public static TalonFX driveMotor3, driveMotor4;
-  public static TalonFX driveMotor5, driveMotor6;
-  public static TalonFX driveMotor7, driveMotor8;
+  public static TalonFX driveMotor1, driveMotor2; //front right module
+  public static TalonFX driveMotor3, driveMotor4; //front left
+  public static TalonFX driveMotor5, driveMotor6; //back left
+  public static TalonFX driveMotor7, driveMotor8; //back right
 
   public static TalonFX testMotor;
 
@@ -85,6 +88,9 @@ public class RobotContainer {
 
   public static SwerveGroup swerveGroup;
   public static SwerveModule frontRightModule, frontLeftModule, backLeftModule, backRightModule;
+  public static Drive drive;
+  public static HighGear highGear;
+  public static LowGear lowGear;
 
   public static Intake intake;
   public static IntakeCommand intakeCommand;
@@ -110,6 +116,7 @@ public class RobotContainer {
     xboxController1X = new JoystickButton(xboxController1, 3);
     xboxController1Y = new JoystickButton(xboxController1, 4);
     xboxController1LBumper = new JoystickButton(xboxController1, 5);
+    xboxController1RBumper = new JoystickButton(xboxController1, 6);
 
     //speed controllers
     intakeMotor = new CANSparkMax(-1, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -141,21 +148,25 @@ public class RobotContainer {
     backLeftModule = new BackLeftModule(driveMotor5, driveMotor6, backLeftAbsEncoder, false);
     backRightModule = new BackRightModule(driveMotor7, driveMotor8, backRightAbsEncoder, false);
 
+    drive = new Drive();
+    lowGear = new LowGear();
+    highGear = new HighGear();
+
     //intake
     intake = new Intake();
-    intakeCommand = new IntakeCommand(0.5);
+    intakeCommand = new IntakeCommand(0.1);
 
     //shooter
     shooter = new Shooter();
-    shootCommand = new ShootCommand(0.5);
+    shootCommand = new ShootCommand(0.1);
 
     //carousel
     carousel = new Carousel();
-    carouselCommand = new CarouselCommand(0.5);
+    carouselCommand = new CarouselCommand(0.1);
 
     //climber
     climber = new Climber();
-    climberCommand = new ClimberCommand(0.5);
+    climberCommand = new ClimberCommand(0.1);
 
     //misc commands
     motorTester = new MotorTester();
@@ -174,8 +185,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
     xboxController1B.whenPressed(calibrateGyro);
-    xboxController1X.whileHeld(motorTester);
-    xboxController1Y.whileHeld(intakeCommand);
+    xboxController1LBumper.whenPressed(lowGear);
+    xboxController1RBumper.whenPressed(highGear);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
