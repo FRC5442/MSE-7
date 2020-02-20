@@ -7,10 +7,14 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
+import frc.robot.SharedMethods;
 
 public class Shooter extends SubsystemBase {
   /**
@@ -19,16 +23,40 @@ public class Shooter extends SubsystemBase {
 
   CANSparkMax shooterWheel1, shooterWheel2;
   CANSparkMax shooterHood;
+
+  CANEncoder wheel1Encoder, wheel2Encoder;
+
+  CANPIDController wheel1PIDController, wheel2PIDController;
   
   public Shooter() {
     shooterWheel1 = RobotContainer.shooterWheel1;
+    wheel1Encoder = shooterWheel1.getEncoder();
+    wheel1PIDController = shooterWheel1.getPIDController();
+
+    wheel1PIDController.setP(6e-5);
+    wheel1PIDController.setI(0);
+    wheel1PIDController.setD(0);
+    wheel1PIDController.setIZone(0);
+    wheel1PIDController.setFF(0.000015);
+    wheel1PIDController.setOutputRange(-1, 1);
+
     shooterWheel2 = RobotContainer.shooterWheel2;
+    wheel2Encoder = shooterWheel2.getEncoder();
+    wheel2PIDController = shooterWheel2.getPIDController();
+
+    wheel2PIDController.setP(6e-5);
+    wheel2PIDController.setI(0);
+    wheel2PIDController.setD(0);
+    wheel2PIDController.setIZone(0);
+    wheel2PIDController.setFF(0.000015);
+    wheel2PIDController.setOutputRange(-1, 1);
+
     shooterHood = RobotContainer.shooterHood;
   }
 
-  public void shoot(double speed) {
-    shooterWheel1.set(speed);
-    shooterWheel2.set(-speed);
+  public void shoot(double rpm) {
+    wheel1PIDController.setReference(rpm, ControlType.kVelocity);
+    //add the other wheel once we know the PID works
   }
 
   public void moveHood(double speed) {

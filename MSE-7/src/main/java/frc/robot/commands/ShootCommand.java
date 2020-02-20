@@ -14,13 +14,13 @@ public class ShootCommand extends CommandBase {
   /**
    * Creates a new ShootCommmand.
    */
-  double speed;
+  double rpm;
 
-  public ShootCommand(double speed) {
+  public ShootCommand(double rpm) {
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.shooter);
-    this.speed = speed;
+    this.rpm = rpm;
   }
 
   // Called when the command is initially scheduled.
@@ -31,7 +31,7 @@ public class ShootCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    RobotContainer.shooter.shoot(speed); //rpm
+    RobotContainer.shooter.shoot(rpm);
   }
 
   // Called once the command ends or is interrupted.
