@@ -24,5 +24,6 @@ public class BackRightModule extends SwerveModule {
     @Override
     public void updateSmartDashboard() {
         SmartDashboard.putNumber("Back Right Encoder: ", this.currentAngle);
+        SmartDashboard.putNumber("Back Right Encoder Zero Offset: ", this.zeroOffset);
     }
 }

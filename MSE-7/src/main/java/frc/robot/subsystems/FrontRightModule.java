@@ -24,5 +24,6 @@ public class FrontRightModule extends SwerveModule {
     @Override
     public void updateSmartDashboard() {
         SmartDashboard.putNumber("Front Left Encoder: ", this.currentAngle);
+        SmartDashboard.putNumber("Front Left Encoder Zero Offest: ", this.zeroOffset);
     }
 }

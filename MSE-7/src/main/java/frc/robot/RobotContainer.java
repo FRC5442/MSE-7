@@ -158,7 +158,7 @@ public class RobotContainer {
 
     //shooter
     shooter = new Shooter();
-    shootCommand = new ShootCommand(1000);
+    shootCommand = new ShootCommand(1000); //rpm
 
     //carousel
     carousel = new Carousel();
