@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
@@ -14,7 +16,6 @@ import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
-import frc.robot.SharedMethods;
 
 public class Shooter extends SubsystemBase {
   /**
@@ -22,7 +23,7 @@ public class Shooter extends SubsystemBase {
    */
 
   CANSparkMax shooterWheel1, shooterWheel2;
-  CANSparkMax shooterHood;
+  WPI_VictorSPX shooterHood;
 
   CANEncoder wheel1Encoder, wheel2Encoder;
 
@@ -55,12 +56,13 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shoot(double rpm) {
-    wheel1PIDController.setReference(rpm, ControlType.kVelocity);
+    wheel1PIDController.setReference(-rpm, ControlType.kVelocity);
+    wheel2PIDController.setReference(rpm, ControlType.kVelocity);
     //add the other wheel once we know the PID works
   }
 
   public void moveHood(double speed) {
-    shooterHood.set(speed);
+    shooterHood.set(VictorSPXControlMode.PercentOutput, speed);
   }
 
   @Override

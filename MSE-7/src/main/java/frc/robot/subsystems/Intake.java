@@ -7,7 +7,7 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -16,8 +16,7 @@ public class Intake extends SubsystemBase {
   /**
    * Creates a new Intake.
    */
-  CANSparkMax intakeMotor;
-
+  WPI_VictorSPX intakeMotor;
 
   public Intake() {
     intakeMotor = RobotContainer.intakeMotor;

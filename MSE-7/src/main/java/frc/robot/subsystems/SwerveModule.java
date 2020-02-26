@@ -28,7 +28,7 @@ public class SwerveModule extends SubsystemBase {
   double elapsedTime = 500;
   double zeroOffset = 0;
 
-  double TRANSLATE_MOD = 0;
+  double TRANSLATE_MOD = 0.3;
   double ROTATE_MOD = 0.2;
   double ERROR_BOUND = 1;
 
@@ -149,11 +149,11 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void updateGearSpeeds() {
-    double MAX_RPM = 2000;
-    topGearSpeed = SharedMethods.rpmToVelocity(MAX_RPM * MathUtil.clamp(topGearSpeed, -1, 1));
-    bottomGearSpeed = SharedMethods.rpmToVelocity(MAX_RPM * MathUtil.clamp(bottomGearSpeed, -1, 1));
+    //double MAX_RPM = 2000;
+    //topGearSpeed = SharedMethods.rpmToVelocity(MAX_RPM * MathUtil.clamp(topGearSpeed, -1, 1));
+    //bottomGearSpeed = SharedMethods.rpmToVelocity(MAX_RPM * MathUtil.clamp(bottomGearSpeed, -1, 1));
 
-    topGear.set(TalonFXControlMode.Velocity, topGearSpeed);
-    bottomGear.set(TalonFXControlMode.Velocity, bottomGearSpeed);
+    //topGear.set(TalonFXControlMode.PercentOutput, topGearSpeed);
+    //bottomGear.set(TalonFXControlMode.PercentOutput, bottomGearSpeed);
   }
 }

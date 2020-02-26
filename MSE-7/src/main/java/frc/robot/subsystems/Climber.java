@@ -7,7 +7,8 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
+import com.ctre.phoenix.motorcontrol.TalonFXControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
@@ -16,14 +17,14 @@ public class Climber extends SubsystemBase {
   /**
    * Creates a new Climber.
    */
-    CANSparkMax climberMotor;
+  TalonFX climberMotor;
   public Climber() {
     climberMotor = RobotContainer.climberMotor;
 
   }
 
   public void moveClimber (double speed){
-    RobotContainer.climberMotor.set(speed);
+    climberMotor.set(TalonFXControlMode.PercentOutput, speed);
   }
 
   @Override

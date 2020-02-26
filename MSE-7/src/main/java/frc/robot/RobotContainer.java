@@ -8,6 +8,7 @@
 package frc.robot;
 
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
+import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
@@ -21,7 +22,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CalibrateGyro;
-import frc.robot.commands.CarouselCommand;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
@@ -32,7 +32,6 @@ import frc.robot.commands.MotorTester;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.BackLeftModule;
 import frc.robot.subsystems.BackRightModule;
-import frc.robot.subsystems.Carousel;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLeftModule;
@@ -64,12 +63,11 @@ public class RobotContainer {
   public static JoystickButton xboxController1Y;
   public static JoystickButton xboxController1LBumper, xboxController1RBumper;
 
-  public static CANSparkMax intakeMotor;
+  public static WPI_VictorSPX intakeMotor;
   public static CANSparkMax shooterWheel1;
   public static CANSparkMax shooterWheel2;
-  public static CANSparkMax shooterHood;
-  public static CANSparkMax carouselMotor;
-  public static CANSparkMax climberMotor;
+  public static WPI_VictorSPX shooterHood;
+  public static TalonFX climberMotor;
   
   public static TalonFX driveMotor1, driveMotor2; //front right module
   public static TalonFX driveMotor3, driveMotor4; //front left
@@ -98,9 +96,6 @@ public class RobotContainer {
   public static Shooter shooter;
   public static ShootCommand shootCommand;
 
-  public static Carousel carousel;
-  public static CarouselCommand carouselCommand;
-
   public static Climber climber;
   public static ClimberCommand climberCommand;
 
@@ -119,34 +114,41 @@ public class RobotContainer {
     xboxController1RBumper = new JoystickButton(xboxController1, 6);
 
     //speed controllers
-    intakeMotor = new CANSparkMax(-1, CANSparkMaxLowLevel.MotorType.kBrushless);
-    shooterWheel1 = new CANSparkMax(-1, CANSparkMaxLowLevel.MotorType.kBrushless);
-    shooterWheel2 = new CANSparkMax(-1, CANSparkMaxLowLevel.MotorType.kBrushless);
-    shooterHood = new CANSparkMax(-1, CANSparkMaxLowLevel.MotorType.kBrushless);
-    carouselMotor = new CANSparkMax(-1, CANSparkMaxLowLevel.MotorType.kBrushless);
-    climberMotor = new CANSparkMax(-1, CANSparkMaxLowLevel.MotorType.kBrushless);
+    intakeMotor = new WPI_VictorSPX(11);
+    shooterWheel1 = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
+    shooterWheel2 = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
+    shooterHood = new WPI_VictorSPX(9);
+    climberMotor = new TalonFX(12);
 
-    testMotor = new TalonFX(-1);
+    driveMotor1 = new TalonFX(1);
+    driveMotor2 = new TalonFX(2);
+    driveMotor3 = new TalonFX(3);
+    driveMotor4 = new TalonFX(4);
+    driveMotor5 = new TalonFX(5);
+    driveMotor6 = new TalonFX(6);
+    driveMotor7 = new TalonFX(7);
+    driveMotor8 = new TalonFX(8);
+    //testMotor = new TalonFX(-1);
 
     //sensors
-    hoodEncoder = new Encoder(-1, -1, true, Encoder.EncodingType.k4X);
+    hoodEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
     hoodEncoder.setDistancePerPulse(1/360);
 
     navX = new AHRS(SerialPort.Port.kMXP);
 
-    frontRightAbsEncoder = new AnalogPotentiometer(-1, 360, 0);
-    frontLeftAbsEncoder = new AnalogPotentiometer(-1, 360, 0);
-    backLeftAbsEncoder = new AnalogPotentiometer(-1, 360, 0);
-    backRightAbsEncoder = new AnalogPotentiometer(-1, 360, 0);
+    frontRightAbsEncoder = new AnalogPotentiometer(0, 360, 0);
+    frontLeftAbsEncoder = new AnalogPotentiometer(1, 360, 0);
+    backLeftAbsEncoder = new AnalogPotentiometer(3, 360, 0);
+    backRightAbsEncoder = new AnalogPotentiometer(2, 360, 0);
 
     //subsystems and commands
 
     //drive train
-    swerveGroup = new SwerveGroup();
     frontRightModule = new FrontRightModule(driveMotor1, driveMotor2, frontRightAbsEncoder, false);
     frontLeftModule = new FrontLeftModule(driveMotor3, driveMotor4, frontLeftAbsEncoder, false);
     backLeftModule = new BackLeftModule(driveMotor5, driveMotor6, backLeftAbsEncoder, false);
     backRightModule = new BackRightModule(driveMotor7, driveMotor8, backRightAbsEncoder, false);
+    swerveGroup = new SwerveGroup();
 
     drive = new Drive();
     lowGear = new LowGear();
@@ -158,11 +160,7 @@ public class RobotContainer {
 
     //shooter
     shooter = new Shooter();
-    shootCommand = new ShootCommand(1000); //rpm
-
-    //carousel
-    carousel = new Carousel();
-    carouselCommand = new CarouselCommand(0.1);
+    shootCommand = new ShootCommand(20000); //rpm
 
     //climber
     climber = new Climber();
@@ -185,8 +183,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
     xboxController1B.whenPressed(calibrateGyro);
-    xboxController1LBumper.whenPressed(lowGear);
-    xboxController1RBumper.whenPressed(highGear);
+    xboxController1LBumper.whileHeld(intakeCommand);
+    //xboxController1RBumper.whenPressed(highGear);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
