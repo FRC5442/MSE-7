@@ -16,11 +16,12 @@ public class MoveHood extends CommandBase {
    */
 
   double distance;
-  
-  public MoveHood(double degrees) {
+  double speed;
+
+  public MoveHood(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.shooter);
-    distance = RobotContainer.hoodEncoder.getDistance() + degrees;
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -31,7 +32,8 @@ public class MoveHood extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double speed = (RobotContainer.hoodEncoder.getDistance() - distance) / 100;
+    //double speed = (RobotContainer.hoodEncoder.getDistance() - distance) / 100;
+
     RobotContainer.shooter.moveHood(speed);
   }
 
@@ -44,6 +46,7 @@ public class MoveHood extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Math.abs(RobotContainer.hoodEncoder.getDistance() - distance) <= 5;
+    //return Math.abs(RobotContainer.hoodEncoder.getDistance() - distance) <= 5;
+    return false;
   }
 }

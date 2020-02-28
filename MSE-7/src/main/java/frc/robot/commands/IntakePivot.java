@@ -7,17 +7,17 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.drive.Vector2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.RobotContainer;
 
-public class Drive extends CommandBase {
-
-  public Drive() {
+public class IntakePivot extends CommandBase {
+  /**
+   * Creates a new IntakePivot.
+   */
+  double speed;
+  public IntakePivot(double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(RobotContainer.swerveGroup);
+    this.speed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -28,25 +28,13 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Joystick driveStick = RobotContainer.xboxController1;
-
-    double leftX = driveStick.getRawAxis(0);
-    double leftY = driveStick.getRawAxis(1);
-
-    System.out.println("Left X: " + leftX);
-    System.out.println("Left Y: " + leftY);
-
-    double rightX = driveStick.getRawAxis(4);
-
-    System.out.println("Right X: " + rightX);
-
-    Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 3), leftY * Math.pow(Math.abs(leftY), 3));
-    RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 2));
+    RobotContainer.intake.pivotIntake(speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.intake.pivotIntake(0);
   }
 
   // Returns true when the command should end.

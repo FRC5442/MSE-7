@@ -17,17 +17,17 @@ import java.time.format.DateTimeFormatter;
  * Add your docs here.
  */
 public class CSVLogger {
-    enum Levels {
+    enum Variables {
         FATAL,
         NORMAL,
         OTHER
     }
 
-    //level is the variable name or the header
-    public void log(String level, String stufftolog) throws IOException {
+    //Variable is the variable name or the header
+    public void log(String Variable, Double stufftolog) throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        String logStuff = (dtf.format(now) + ',' + level + ',' + stufftolog);
+        String logStuff = (dtf.format(now) + ',' + Variable + ',' + stufftolog);
 
         FileWriter fileWriter = new FileWriter("log.csv", true);
         PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -35,11 +35,11 @@ public class CSVLogger {
         printWriter.close();
     }
 
-    //level is the variable name or the header
-    public void fatal(String level, String stufftolog) throws IOException {
+    //Variable is the variable name or the header
+    public void fatal(String Variable, String stufftolog) throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        String logStuff = (dtf.format(now) + ',' + level + ',' + stufftolog);
+        String logStuff = (dtf.format(now) + ',' + Variable + ',' + stufftolog);
 
         FileWriter fileWriter = new FileWriter("fatal.csv", true);
         PrintWriter printWriter = new PrintWriter(fileWriter);
@@ -47,11 +47,11 @@ public class CSVLogger {
         printWriter.close();
     }
 
-    //level is the variable name or the header
-    public void normal(String level, String stufftolog) throws IOException {
+    //Variable is the variable name or the header
+    public void normal(String Variable, String stufftolog) throws IOException {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
-        String logStuff = (dtf.format(now) + ',' + level + ',' + stufftolog);
+        String logStuff = (dtf.format(now) + ',' + Variable + ',' + stufftolog);
 
         FileWriter fileWriter = new FileWriter("normal.csv", true);
         PrintWriter printWriter = new PrintWriter(fileWriter);

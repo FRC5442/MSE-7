@@ -17,14 +17,19 @@ public class Intake extends SubsystemBase {
    * Creates a new Intake.
    */
   WPI_VictorSPX intakeMotor;
+  WPI_VictorSPX intakePivotMotor;
 
   public Intake() {
     intakeMotor = RobotContainer.intakeMotor;
-
+    intakePivotMotor = RobotContainer.intakePivotMotor;
   }
 
   public void moveIntake(double speed) {
     intakeMotor.set(speed);
+  }
+
+  public void pivotIntake(double speed) {
+    intakePivotMotor.set(speed);
   }
 
   @Override

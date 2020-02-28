@@ -13,7 +13,6 @@ import com.revrobotics.CANEncoder;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpiutil.math.MathUtil;
 import frc.robot.Constants;
 import frc.robot.SharedMethods;
 
@@ -34,8 +33,6 @@ public class SwerveModule extends SubsystemBase {
 
   double topGearSpeed = 0;
   double bottomGearSpeed = 0;
-  double topGearPower = 0;
-  double bottomGearPower = 0;
 
   String moduleID = "";
 
@@ -112,9 +109,6 @@ public class SwerveModule extends SubsystemBase {
   public void stop() {
     topGearSpeed = 0;
     bottomGearSpeed = 0;
-
-    topGearPower = 0;
-    bottomGearPower = 0;
   }
 
   @Override

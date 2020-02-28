@@ -22,13 +22,16 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.CalibrateGyro;
+import frc.robot.commands.CalibrateModules;
 import frc.robot.commands.ClimberCommand;
 import frc.robot.commands.Drive;
 import frc.robot.commands.ExampleCommand;
 import frc.robot.commands.HighGear;
 import frc.robot.commands.IntakeCommand;
+import frc.robot.commands.IntakePivot;
 import frc.robot.commands.LowGear;
 import frc.robot.commands.MotorTester;
+import frc.robot.commands.MoveHood;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.BackLeftModule;
 import frc.robot.subsystems.BackRightModule;
@@ -63,6 +66,7 @@ public class RobotContainer {
   public static JoystickButton xboxController1Y;
   public static JoystickButton xboxController1LBumper, xboxController1RBumper;
 
+  public static WPI_VictorSPX intakePivotMotor;
   public static WPI_VictorSPX intakeMotor;
   public static CANSparkMax shooterWheel1;
   public static CANSparkMax shooterWheel2;
@@ -92,10 +96,14 @@ public class RobotContainer {
 
   public static Intake intake;
   public static IntakeCommand intakeCommand;
+  public static IntakePivot intakePivot;
 
   public static Shooter shooter;
   public static ShootCommand shootCommand;
-
+  public static ShootCommand reverseShooter;
+  public static MoveHood lowerHood;
+  public static MoveHood raiseHood;
+  
   public static Climber climber;
   public static ClimberCommand climberCommand;
 
@@ -114,6 +122,7 @@ public class RobotContainer {
     xboxController1RBumper = new JoystickButton(xboxController1, 6);
 
     //speed controllers
+    intakePivotMotor = new WPI_VictorSPX(14);
     intakeMotor = new WPI_VictorSPX(11);
     shooterWheel1 = new CANSparkMax(10, CANSparkMaxLowLevel.MotorType.kBrushless);
     shooterWheel2 = new CANSparkMax(13, CANSparkMaxLowLevel.MotorType.kBrushless);
@@ -121,7 +130,9 @@ public class RobotContainer {
     climberMotor = new TalonFX(12);
 
     driveMotor1 = new TalonFX(1);
+    driveMotor1.setInverted(false);
     driveMotor2 = new TalonFX(2);
+    driveMotor2.setInverted(true);
     driveMotor3 = new TalonFX(3);
     driveMotor4 = new TalonFX(4);
     driveMotor5 = new TalonFX(5);
@@ -156,11 +167,15 @@ public class RobotContainer {
 
     //intake
     intake = new Intake();
-    intakeCommand = new IntakeCommand(0.1);
+    intakeCommand = new IntakeCommand(0.2);
+    intakePivot = new IntakePivot(-0.1);
 
     //shooter
     shooter = new Shooter();
     shootCommand = new ShootCommand(20000); //rpm
+    reverseShooter = new ShootCommand(-2500); //rpm
+    lowerHood = new MoveHood(0.2);
+    raiseHood = new MoveHood(-0.2);
 
     //climber
     climber = new Climber();
@@ -182,9 +197,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
-    xboxController1B.whenPressed(calibrateGyro);
-    xboxController1LBumper.whileHeld(intakeCommand);
-    //xboxController1RBumper.whenPressed(highGear);
+    xboxController1B.whileHeld(reverseShooter);
+    //xboxController1X.whileHeld(intakePivot);
+    xboxController1LBumper.whileHeld(lowerHood);
+    xboxController1RBumper.whileHeld(raiseHood);
+    xboxController1X.whenPressed(new CalibrateModules());
+    xboxController1Y.whenPressed(calibrateGyro);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

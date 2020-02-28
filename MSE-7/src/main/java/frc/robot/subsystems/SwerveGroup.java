@@ -61,9 +61,11 @@ public class SwerveGroup extends SubsystemBase {
     double STR = -translation.x;
     double RCW = -rotation;
 
+    /*
     double temp = (FWD * Math.cos(gyroRadians)) + (STR * Math.sin(gyroRadians));
     STR = (-FWD * Math.sin(gyroRadians)) + (STR * Math.cos(gyroRadians));
     FWD = temp;
+    */
 
     if (Math.abs(translation.magnitude()) <= Constants.JOYSTICK_DEAD_ZONE) {
       FWD = 0;
@@ -132,7 +134,7 @@ public class SwerveGroup extends SubsystemBase {
   }
 
   public double getConvertedGyroAngle() {
-    double rawGyroAngle = (RobotContainer.navX.getAngle() + Constants.YAW_OFFSET); //in degrees
+    double rawGyroAngle = (RobotContainer.navX.getPitch() + Constants.YAW_OFFSET); //in degrees
     double convertedRawGyroAngle = ((360 - rawGyroAngle + 90) % 360);
     if (convertedRawGyroAngle < 0) {
       return SharedMethods.roundTo(360 + convertedRawGyroAngle, 0);

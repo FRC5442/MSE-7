@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.VictorSPXControlMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.revrobotics.CANEncoder;
 import com.revrobotics.CANPIDController;
@@ -57,12 +56,12 @@ public class Shooter extends SubsystemBase {
 
   public void shoot(double rpm) {
     wheel1PIDController.setReference(-rpm, ControlType.kVelocity);
-    wheel2PIDController.setReference(rpm, ControlType.kVelocity);
+    //wheel2PIDController.setReference(rpm, ControlType.kVelocity);
     //add the other wheel once we know the PID works
   }
 
   public void moveHood(double speed) {
-    shooterHood.set(VictorSPXControlMode.PercentOutput, speed);
+    shooterHood.set(speed);
   }
 
   @Override
