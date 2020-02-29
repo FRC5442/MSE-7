@@ -17,8 +17,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class BackLeftModule extends SwerveModule {
 
-    public BackLeftModule(TalonFX topGear, TalonFX bottomGear, AnalogPotentiometer absEncoder, boolean inverted) {
-        super(topGear, bottomGear, absEncoder, inverted, 67);
+    public BackLeftModule(TalonFX topGear, TalonFX bottomGear, AnalogPotentiometer absEncoder) {
+        super(topGear, bottomGear, absEncoder, true, 159);
     }
 
     @Override

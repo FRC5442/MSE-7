@@ -31,7 +31,7 @@ public class SwerveGroup extends SubsystemBase {
   }
 
   public void moveCrab(Vector2d translation, double rotation) {
-    double joystickAngle = (Math.atan2(translation.y, -translation.x) * (180/Math.PI)) + 180;
+    double joystickAngle = (Math.atan2(-translation.y, -translation.x) * (180/Math.PI)) + 180;
     if (Math.abs(translation.magnitude()) > Constants.JOYSTICK_DEAD_ZONE) {
       frontRightModule.move(translation.magnitude(), joystickAngle);
       frontLeftModule.move(translation.magnitude(), joystickAngle);
@@ -39,11 +39,11 @@ public class SwerveGroup extends SubsystemBase {
       backRightModule.move(translation.magnitude(), joystickAngle);
     }
     else if (Math.abs(rotation) > Constants.JOYSTICK_DEAD_ZONE) {
-      frontLeftModule.move(rotation, 225);
-      backRightModule.move(rotation, 225);
+      frontLeftModule.move(rotation, 225-90);
+      backRightModule.move(rotation, 45-90);
 
-      frontRightModule.move(rotation, 45);
-      backLeftModule.move(rotation, 45);
+      frontRightModule.move(rotation, 135-90);
+      backLeftModule.move(rotation, 315-90);
     }
     else {
       frontRightModule.stop();

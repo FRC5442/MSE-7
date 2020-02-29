@@ -56,8 +56,8 @@ public class Shooter extends SubsystemBase {
 
   public void shoot(double rpm) {
     wheel1PIDController.setReference(-rpm, ControlType.kVelocity);
-    //wheel2PIDController.setReference(rpm, ControlType.kVelocity);
-    //add the other wheel once we know the PID works
+    wheel2PIDController.setReference(rpm, ControlType.kVelocity);
+    System.out.println(wheel1Encoder.getVelocity() + ", " + wheel2Encoder.getVelocity());
   }
 
   public void moveHood(double speed) {

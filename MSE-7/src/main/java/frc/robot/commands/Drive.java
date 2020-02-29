@@ -36,7 +36,7 @@ public class Drive extends CommandBase {
     double rightX = driveStick.getRawAxis(4);
 
     Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 1), leftY * Math.pow(Math.abs(leftY), 1));
-    RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 1));
+    RobotContainer.swerveGroup.moveCrab(translation, rightX * Math.pow(Math.abs(rightX), 1));
   }
 
   // Called once the command ends or is interrupted.

@@ -23,7 +23,7 @@ public class Climber extends SubsystemBase {
 
   }
 
-  public void moveClimber (double speed){
+  public void moveClimber(double speed){
     climberMotor.set(TalonFXControlMode.PercentOutput, speed);
   }
 

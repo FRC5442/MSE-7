@@ -48,7 +48,6 @@ public class SwerveModule extends SubsystemBase {
 
     if (inverted) {
       TRANSLATE_MOD *= -1;
-      ROTATE_MOD *= -1;
     }
   }
   
