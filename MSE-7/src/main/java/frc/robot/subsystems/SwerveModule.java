@@ -60,8 +60,7 @@ public class SwerveModule extends SubsystemBase {
     bottomGearSpeed += (speed * TRANSLATE_MOD);
 
     if (Math.abs(currentAngle - angle) >= ERROR_BOUND && Math.abs(currentAngle - angle) <= 360 - ERROR_BOUND) {
-      ROTATE_MOD = 0.2 - (((Math.abs(topGearSpeed) + Math.abs(bottomGearSpeed)) / 2) * 0.15);
-
+      //ROTATE_MOD = 0.2 - (((Math.abs(topGearSpeed) + Math.abs(bottomGearSpeed)) / 2) * 0.15);
       turnToAngle(angle);
     }
   }
@@ -143,11 +142,7 @@ public class SwerveModule extends SubsystemBase {
   }
 
   public void updateGearSpeeds() {
-    //double MAX_RPM = 2000;
-    //topGearSpeed = SharedMethods.rpmToVelocity(MAX_RPM * MathUtil.clamp(topGearSpeed, -1, 1));
-    //bottomGearSpeed = SharedMethods.rpmToVelocity(MAX_RPM * MathUtil.clamp(bottomGearSpeed, -1, 1));
-
-    //topGear.set(TalonFXControlMode.PercentOutput, topGearSpeed);
-    //bottomGear.set(TalonFXControlMode.PercentOutput, bottomGearSpeed);
+    topGear.set(TalonFXControlMode.PercentOutput, topGearSpeed);
+    bottomGear.set(TalonFXControlMode.PercentOutput, bottomGearSpeed);
   }
 }

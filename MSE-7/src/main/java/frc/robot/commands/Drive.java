@@ -33,20 +33,16 @@ public class Drive extends CommandBase {
     double leftX = driveStick.getRawAxis(0);
     double leftY = driveStick.getRawAxis(1);
 
-    System.out.println("Left X: " + leftX);
-    System.out.println("Left Y: " + leftY);
-
     double rightX = driveStick.getRawAxis(4);
 
-    System.out.println("Right X: " + rightX);
-
-    Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 3), leftY * Math.pow(Math.abs(leftY), 3));
-    RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 2));
+    Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 1), leftY * Math.pow(Math.abs(leftY), 1));
+    RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 1));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    RobotContainer.swerveGroup.moveSwerve(new Vector2d(0, 0), 0);
   }
 
   // Returns true when the command should end.

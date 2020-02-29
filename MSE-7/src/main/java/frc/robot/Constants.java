@@ -16,8 +16,8 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
-    public static final double ROBOT_WIDTH = 19.1; //in inches
-    public static final double ROBOT_LENGTH = 19.1; //in inches
+    public static final double ROBOT_WIDTH = 28; //in inches
+    public static final double ROBOT_LENGTH = 28; //in inches
     public static final double ROBOT_RADIUS = Math.sqrt(Math.pow(ROBOT_WIDTH / 2, 2) + Math.pow(ROBOT_LENGTH / 2, 2));
     
     public static final double JOYSTICK_DEAD_ZONE = 0.1; //joystick values 0-1

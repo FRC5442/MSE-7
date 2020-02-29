@@ -30,7 +30,6 @@ import frc.robot.commands.HighGear;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePivot;
 import frc.robot.commands.LowGear;
-import frc.robot.commands.MotorTester;
 import frc.robot.commands.MoveHood;
 import frc.robot.commands.ShootCommand;
 import frc.robot.subsystems.BackLeftModule;
@@ -65,6 +64,7 @@ public class RobotContainer {
   public static JoystickButton xboxController1X;
   public static JoystickButton xboxController1Y;
   public static JoystickButton xboxController1LBumper, xboxController1RBumper;
+  public static JoystickButton xboxController1LStick, xboxController1RStick;
 
   public static WPI_VictorSPX intakePivotMotor;
   public static WPI_VictorSPX intakeMotor;
@@ -107,9 +107,8 @@ public class RobotContainer {
   public static Climber climber;
   public static ClimberCommand climberCommand;
 
-  public static MotorTester motorTester;
   public static CalibrateGyro calibrateGyro;
-
+  public static CalibrateModules calibrateModules;
   
   public RobotContainer() {
     //xbox controller
@@ -120,6 +119,8 @@ public class RobotContainer {
     xboxController1Y = new JoystickButton(xboxController1, 4);
     xboxController1LBumper = new JoystickButton(xboxController1, 5);
     xboxController1RBumper = new JoystickButton(xboxController1, 6);
+    xboxController1LStick = new JoystickButton(xboxController1, 9);
+    xboxController1RStick = new JoystickButton(xboxController1, 10);
 
     //speed controllers
     intakePivotMotor = new WPI_VictorSPX(14);
@@ -182,8 +183,8 @@ public class RobotContainer {
     climberCommand = new ClimberCommand(0.1);
 
     //misc commands
-    motorTester = new MotorTester();
     calibrateGyro = new CalibrateGyro();
+    calibrateModules = new CalibrateModules();
 
     // Configure the button bindings
     configureButtonBindings();
@@ -198,11 +199,10 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
     xboxController1B.whileHeld(reverseShooter);
-    //xboxController1X.whileHeld(intakePivot);
+    xboxController1Y.whenPressed(calibrateGyro);
     xboxController1LBumper.whileHeld(lowerHood);
     xboxController1RBumper.whileHeld(raiseHood);
-    xboxController1X.whenPressed(new CalibrateModules());
-    xboxController1Y.whenPressed(calibrateGyro);
+    xboxController1LStick.whileHeld(drive);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
