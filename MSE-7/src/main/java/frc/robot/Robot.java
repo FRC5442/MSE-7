@@ -93,6 +93,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
+    RobotContainer.drive.schedule();
     RobotContainer.intakeCommand.schedule();
   }
 

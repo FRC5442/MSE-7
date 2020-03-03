@@ -31,7 +31,7 @@ public class SwerveGroup extends SubsystemBase {
   }
 
   public void moveCrab(Vector2d translation, double rotation) {
-    double joystickAngle = (Math.atan2(-translation.y, -translation.x) * (180/Math.PI)) + 180;
+    double joystickAngle = (Math.atan2(-translation.y, translation.x) * (180/Math.PI)) + 180;
     if (Math.abs(translation.magnitude()) > Constants.JOYSTICK_DEAD_ZONE) {
       frontRightModule.move(translation.magnitude(), joystickAngle);
       frontLeftModule.move(translation.magnitude(), joystickAngle);
@@ -39,11 +39,11 @@ public class SwerveGroup extends SubsystemBase {
       backRightModule.move(translation.magnitude(), joystickAngle);
     }
     else if (Math.abs(rotation) > Constants.JOYSTICK_DEAD_ZONE) {
-      frontLeftModule.move(rotation, 225-90);
-      backRightModule.move(rotation, 45-90);
+      frontLeftModule.move(rotation, 225);
+      backRightModule.move(rotation, 45);
 
-      frontRightModule.move(rotation, 135-90);
-      backLeftModule.move(rotation, 315-90);
+      frontRightModule.move(rotation, 135);
+      backLeftModule.move(rotation, 315);
     }
     else {
       frontRightModule.stop();
@@ -57,8 +57,8 @@ public class SwerveGroup extends SubsystemBase {
     double gyroRadians = getConvertedGyroAngle() * (Math.PI / 180); //in radians
     SmartDashboard.putNumber("Gyro Angle: ", getConvertedGyroAngle());
 
-    double FWD = -translation.y;
-    double STR = -translation.x;
+    double STR = -translation.y;
+    double FWD = -translation.x;
     double RCW = -rotation;
 
     /*
@@ -79,21 +79,21 @@ public class SwerveGroup extends SubsystemBase {
     double D = FWD + RCW * (Constants.ROBOT_WIDTH / Constants.ROBOT_RADIUS);
 
     //B and C
-    double frontRightSpeed = getMovementAttributes(B, C)[0]; 
+    double frontRightSpeed = getMovementAttributes(A, D)[0]; //good
     double frontRightAngle = getMovementAttributes(B, C)[1];
     double maxSpeed = frontRightSpeed;
 
     //B and D
-    double frontLeftSpeed = getMovementAttributes(B, D)[0]; 
-    double frontLeftAngle = getMovementAttributes(B, D)[1];
+    double frontLeftSpeed = getMovementAttributes(A, C)[0]; 
+    double frontLeftAngle = -getMovementAttributes(B, D)[1];
     if (frontLeftSpeed > maxSpeed) frontLeftSpeed = maxSpeed;
 
     //A and D
-    double backLeftSpeed = getMovementAttributes(A, D)[0]; 
+    double backLeftSpeed = getMovementAttributes(A, D)[0]; //good
     double backLeftAngle = getMovementAttributes(A, D)[1];
     if (backLeftSpeed > maxSpeed) backLeftSpeed = maxSpeed;
 
-    //A and C
+    //A and C - Back Right
     double backRightSpeed = getMovementAttributes(A, C)[0];
     double backRightAngle = getMovementAttributes(A, C)[1];
     if (backRightSpeed > maxSpeed) backRightSpeed = maxSpeed;
@@ -121,7 +121,7 @@ public class SwerveGroup extends SubsystemBase {
 
   public double[] getMovementAttributes(double c1, double c2) {
     double speed = Math.sqrt(Math.pow(c1, 2) + Math.pow(c2, 2));
-    double angle = Math.atan2(c1, c2) * (180 / Math.PI) + 180;
+    double angle = Math.atan2(c1, c2) * (180 / Math.PI) + 90;
 
     return new double[] { speed, angle };
   }

@@ -27,7 +27,7 @@ public class SwerveModule extends SubsystemBase {
   double elapsedTime = 500;
   double zeroOffset = 0;
 
-  double TRANSLATE_MOD = 0.3;
+  double TRANSLATE_MOD = 0.4;
   double ROTATE_MOD = 0.2;
   double ERROR_BOUND = 1;
 
@@ -36,7 +36,7 @@ public class SwerveModule extends SubsystemBase {
 
   String moduleID = "";
 
-  public SwerveModule(TalonFX topGear, TalonFX bottomGear, AnalogPotentiometer absEncoder, boolean inverted, double zeroOffset) {
+  public SwerveModule(TalonFX topGear, TalonFX bottomGear, AnalogPotentiometer absEncoder, boolean invertedTranslate, double zeroOffset) {
 
     this.moduleID = moduleID.toUpperCase();
 
@@ -46,7 +46,7 @@ public class SwerveModule extends SubsystemBase {
     this.bottomGear = bottomGear;
     this.absEncoder = absEncoder;
 
-    if (inverted) {
+    if (invertedTranslate) {
       TRANSLATE_MOD *= -1;
     }
   }

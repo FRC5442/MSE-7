@@ -207,7 +207,7 @@ public class RobotContainer {
     xboxController1Y.whileHeld(climberCommand);
     xboxController1LBumper.whileHeld(lowerHood);
     xboxController1RBumper.whileHeld(raiseHood);
-    xboxController1Start.whileHeld(drive);
+    xboxController1Start.whenPressed(calibrateModules);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
