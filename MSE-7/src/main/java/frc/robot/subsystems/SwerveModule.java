@@ -28,7 +28,7 @@ public class SwerveModule extends SubsystemBase {
   double zeroOffset = 0;
 
   double TRANSLATE_MOD = 0.4;
-  double ROTATE_MOD = 0.2;
+  double ROTATE_MOD = 0.3;
   double ERROR_BOUND = 1;
 
   double topGearSpeed = 0;

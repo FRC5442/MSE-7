@@ -31,7 +31,11 @@ public class SwerveGroup extends SubsystemBase {
   }
 
   public void moveCrab(Vector2d translation, double rotation) {
-    double joystickAngle = (Math.atan2(-translation.y, translation.x) * (180/Math.PI)) + 180;
+    double yawAngle = RobotContainer.navX.getAngle()/* - Constants.GYRO_OFFSET*/;
+    SmartDashboard.putNumber("Gyro Angle: ", getConvertedGyroAngle());
+
+    double joystickAngle = (Math.atan2(-translation.y, translation.x) * (180/Math.PI)) + 180 + yawAngle;
+
     if (Math.abs(translation.magnitude()) > Constants.JOYSTICK_DEAD_ZONE) {
       frontRightModule.move(translation.magnitude(), joystickAngle);
       frontLeftModule.move(translation.magnitude(), joystickAngle);
@@ -57,15 +61,15 @@ public class SwerveGroup extends SubsystemBase {
     double gyroRadians = getConvertedGyroAngle() * (Math.PI / 180); //in radians
     SmartDashboard.putNumber("Gyro Angle: ", getConvertedGyroAngle());
 
-    double STR = -translation.y;
-    double FWD = -translation.x;
+    double STR = translation.x;
+    double FWD = translation.y;
     double RCW = -rotation;
 
-    /*
+    
     double temp = (FWD * Math.cos(gyroRadians)) + (STR * Math.sin(gyroRadians));
     STR = (-FWD * Math.sin(gyroRadians)) + (STR * Math.cos(gyroRadians));
     FWD = temp;
-    */
+    
 
     if (Math.abs(translation.magnitude()) <= Constants.JOYSTICK_DEAD_ZONE) {
       FWD = 0;
@@ -79,23 +83,23 @@ public class SwerveGroup extends SubsystemBase {
     double D = FWD + RCW * (Constants.ROBOT_WIDTH / Constants.ROBOT_RADIUS);
 
     //B and C
-    double frontRightSpeed = getMovementAttributes(A, D)[0]; //good
-    double frontRightAngle = getMovementAttributes(B, C)[1];
+    double frontRightSpeed = getMovementAttributes(A, C)[0]; //good
+    double frontRightAngle = getMovementAttributes(A, C)[1];
     double maxSpeed = frontRightSpeed;
 
     //B and D
-    double frontLeftSpeed = getMovementAttributes(A, C)[0]; 
-    double frontLeftAngle = -getMovementAttributes(B, D)[1];
+    double frontLeftSpeed = getMovementAttributes(A, D)[0]; 
+    double frontLeftAngle = getMovementAttributes(A, D)[1];
     if (frontLeftSpeed > maxSpeed) frontLeftSpeed = maxSpeed;
 
     //A and D
-    double backLeftSpeed = getMovementAttributes(A, D)[0]; //good
-    double backLeftAngle = getMovementAttributes(A, D)[1];
+    double backLeftSpeed = getMovementAttributes(B, D)[0]; //good
+    double backLeftAngle = getMovementAttributes(B, D)[1];
     if (backLeftSpeed > maxSpeed) backLeftSpeed = maxSpeed;
 
     //A and C - Back Right
-    double backRightSpeed = getMovementAttributes(A, C)[0];
-    double backRightAngle = getMovementAttributes(A, C)[1];
+    double backRightSpeed = getMovementAttributes(B, C)[0];
+    double backRightAngle = getMovementAttributes(B, C)[1];
     if (backRightSpeed > maxSpeed) backRightSpeed = maxSpeed;
 
     if (Math.abs(translation.magnitude()) > Constants.JOYSTICK_DEAD_ZONE || Math.abs(rotation) > Constants.JOYSTICK_DEAD_ZONE) {
@@ -134,7 +138,7 @@ public class SwerveGroup extends SubsystemBase {
   }
 
   public double getConvertedGyroAngle() {
-    double rawGyroAngle = (RobotContainer.navX.getPitch() + Constants.YAW_OFFSET); //in degrees
+    double rawGyroAngle = (RobotContainer.navX.getAngle() + Constants.GYRO_OFFSET); //in degrees
     double convertedRawGyroAngle = ((360 - rawGyroAngle + 90) % 360);
     if (convertedRawGyroAngle < 0) {
       return SharedMethods.roundTo(360 + convertedRawGyroAngle, 0);

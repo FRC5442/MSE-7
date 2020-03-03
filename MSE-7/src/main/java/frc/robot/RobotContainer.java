@@ -100,6 +100,7 @@ public class RobotContainer {
   public static Intake intake;
   public static IntakeCommand intakeCommand;
   public static IntakePivot intakePivot;
+  public static IntakePivot reverseIntakePivot;
 
   public static Shooter shooter;
   public static ShootCommand shootCommand;
@@ -173,6 +174,7 @@ public class RobotContainer {
     intake = new Intake();
     intakeCommand = new IntakeCommand(1);
     intakePivot = new IntakePivot(0.4);
+    reverseIntakePivot = new IntakePivot(-0.4);
 
     //shooter
     shooter = new Shooter();
@@ -201,13 +203,15 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    xboxController1A.whileHeld(shootCommand);
-    xboxController1B.whileHeld(reverseShooter);
+    //xboxController1A.whileHeld(shootCommand);
+    //xboxController1B.whileHeld(reverseShooter);
+    //xboxController1Y.whileHeld(climberCommand);
+    //xboxController1LBumper.whileHeld(lowerHood);
+    //xboxController1RBumper.whileHeld(raiseHood);
+
+    xboxController1B.whenPressed(calibrateGyro);
     xboxController1X.whileHeld(intakePivot);
-    xboxController1Y.whileHeld(climberCommand);
-    xboxController1LBumper.whileHeld(lowerHood);
-    xboxController1RBumper.whileHeld(raiseHood);
-    xboxController1Start.whenPressed(calibrateModules);
+    xboxController1Y.whileHeld(reverseIntakePivot);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

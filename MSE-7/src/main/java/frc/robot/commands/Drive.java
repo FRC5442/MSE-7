@@ -36,13 +36,13 @@ public class Drive extends CommandBase {
 
     Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 1), leftY * Math.pow(Math.abs(leftY), 1));
     //RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 1));
-    RobotContainer.swerveGroup.moveCrab(translation, rightX * Math.pow(Math.abs(rightX), 1));
+    RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 1));
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    RobotContainer.swerveGroup.moveSwerve(new Vector2d(0, 0), 0);
+    RobotContainer.swerveGroup.moveCrab(new Vector2d(0, 0), 0);
   }
 
   // Returns true when the command should end.
