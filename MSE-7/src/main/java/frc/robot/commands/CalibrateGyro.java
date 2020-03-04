@@ -22,6 +22,6 @@ public class CalibrateGyro extends InstantCommand {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Constants.GYRO_OFFSET = -RobotContainer.navX.getAngle();
+    Constants.GYRO_OFFSET = -RobotContainer.navX.getAngle() + 90;
   }
 }

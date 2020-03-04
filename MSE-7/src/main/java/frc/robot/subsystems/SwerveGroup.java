@@ -63,8 +63,13 @@ public class SwerveGroup extends SubsystemBase {
 
     double STR = translation.x;
     double FWD = translation.y;
-    double RCW = -rotation;
-
+    double RCW = -rotation * ((-0.75 * translation.magnitude()) + 1);
+    /**
+     * rotation linearly adjusted for translation speed
+     * states that the rotation is 1x is the translation speed is 0
+     *  and 0.25x is the translation speed = full (1)
+     *  based on the equation of a line (0.75x + 1), where x is the translation speed
+    */
     
     double temp = (FWD * Math.cos(gyroRadians)) + (STR * Math.sin(gyroRadians));
     STR = (-FWD * Math.sin(gyroRadians)) + (STR * Math.cos(gyroRadians));

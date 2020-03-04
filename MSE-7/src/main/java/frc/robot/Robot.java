@@ -74,6 +74,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();
     }
+
+    RobotContainer.calibrateGyro.schedule();
   }
 
   /**
@@ -93,6 +95,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
+    RobotContainer.calibrateGyro.schedule();
     RobotContainer.drive.schedule();
     RobotContainer.intakeCommand.schedule();
   }
