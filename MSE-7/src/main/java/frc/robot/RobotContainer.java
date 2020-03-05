@@ -68,6 +68,7 @@ public class RobotContainer {
   public static JoystickButton xboxController1LBumper, xboxController1RBumper;
   public static JoystickButton xboxController1LStick, xboxController1RStick;
   public static JoystickButton xboxController1Start, xboxController1Back;
+  public static JoystickButton xboxController1DpadUp, xboxController1DpadDown;
 
   public static Joystick xboxController2;
   public static JoystickButton xboxController2A;
@@ -110,6 +111,7 @@ public class RobotContainer {
 
   public static Intake intake;
   public static IntakeCommand intakeCommand;
+  public static IntakeCommand reverseIntake;
   public static IntakePivot intakePivot;
   public static IntakePivot reverseIntakePivot;
 
@@ -199,7 +201,8 @@ public class RobotContainer {
 
     //intake
     intake = new Intake();
-    intakeCommand = new IntakeCommand(1);
+    intakeCommand = new IntakeCommand(0.2);
+    reverseIntake = new IntakeCommand(-0.2);
     intakePivot = new IntakePivot(0.4);
     reverseIntakePivot = new IntakePivot(-0.4);
 
@@ -232,17 +235,20 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    xboxController1A.whileHeld(shootCommand);
-    xboxController1Start.whenPressed(calibrateGyro);
+    //xboxController1Start.whenPressed(calibrateGyro);
     //xboxController1Back.whenPressed(calibrateModules);
-    //xboxController1X.whileHeld(intakeCommand);
-    xboxController1B.whileHeld(reverseShooter);
-    xboxController1Y.whileHeld(reverseIntakePivot);
+    xboxController1A.whileHeld(shootCommand);
+    xboxController1B.whileHeld(intakeCommand);
+    xboxController1Start.whileHeld(reverseIntake);
+    xboxController1Back.whileHeld(reverseShooter);
+    xboxController1RBumper.whileHeld(raiseHood);
+    xboxController1LBumper.whileHeld(lowerHood);
 
     xboxController2A.whileHeld(climberCommand);
     xboxController2B.whileHeld(reverseClimber);
     xboxController2X.whileHeld(winchCommand); 
     xboxController2Y.whileHeld(calibrateModules); 
+    xboxController2Start.whenPressed(calibrateGyro);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

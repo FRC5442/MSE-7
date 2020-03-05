@@ -32,7 +32,7 @@ public class ShootCommand extends CommandBase {
   @Override
   public void execute() {
     RobotContainer.shooter.shoot(rpm);
-  }
+    }
 
   // Called once the command ends or is interrupted.
   @Override
