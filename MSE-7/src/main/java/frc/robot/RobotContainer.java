@@ -201,14 +201,14 @@ public class RobotContainer {
 
     //intake
     intake = new Intake();
-    intakeCommand = new IntakeCommand(0.2);
-    reverseIntake = new IntakeCommand(-0.2);
+    intakeCommand = new IntakeCommand(-0.75);
+    reverseIntake = new IntakeCommand(0.75);
     intakePivot = new IntakePivot(0.4);
     reverseIntakePivot = new IntakePivot(-0.4);
 
     //shooter
     shooter = new Shooter();
-    shootCommand = new ShootCommand(5000); //rpm
+    shootCommand = new ShootCommand(3000); //rpm
     reverseShooter = new ShootCommand(-500); //rpm
     lowerHood = new MoveHood(0.2);
     raiseHood = new MoveHood(-0.2);
