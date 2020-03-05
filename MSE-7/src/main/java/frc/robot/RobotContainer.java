@@ -182,7 +182,6 @@ public class RobotContainer {
 
     //sensors
     hoodEncoder = new Encoder(0, 1, true, Encoder.EncodingType.k4X);
-    hoodEncoder.setDistancePerPulse(1/360);
 
     navX = new AHRS(SerialPort.Port.kMXP);
 
@@ -196,6 +195,7 @@ public class RobotContainer {
 
     //subsystems and commands
     
+    //vision
     piVisionTable = new PiVisionTable();
 
     //drive train
@@ -246,7 +246,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
     xboxController1Start.whenPressed(calibrateGyro);
-    xboxController1X.whileHeld(intakeCommand);
+    xboxController1X.whileHeld(intakePivot);
     xboxController1Y.whileHeld(reverseIntakePivot);
 
     xboxController2A.whileHeld(climberCommand);
