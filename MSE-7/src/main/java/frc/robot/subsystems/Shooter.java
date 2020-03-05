@@ -13,6 +13,8 @@ import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotContainer;
 
@@ -25,6 +27,7 @@ public class Shooter extends SubsystemBase {
   WPI_VictorSPX shooterHood;
 
   CANEncoder wheel1Encoder, wheel2Encoder;
+  Encoder hoodEncoder;
 
   CANPIDController wheel1PIDController, wheel2PIDController;
   
@@ -52,6 +55,12 @@ public class Shooter extends SubsystemBase {
     wheel2PIDController.setOutputRange(-1, 1);
 
     shooterHood = RobotContainer.shooterHood;
+
+    hoodEncoder = RobotContainer.hoodEncoder;
+  }
+
+  public double getShooterAngle() {
+    return hoodEncoder.getDistance();
   }
 
   public void shoot(double rpm) {
@@ -67,5 +76,6 @@ public class Shooter extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    
   }
 }
