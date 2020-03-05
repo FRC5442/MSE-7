@@ -55,12 +55,7 @@ public class Shooter extends SubsystemBase {
     wheel2PIDController.setOutputRange(-1, 1);
 
     shooterHood = RobotContainer.shooterHood;
-
     hoodEncoder = RobotContainer.hoodEncoder;
-  }
-
-  public double getShooterAngle() {
-    return hoodEncoder.getDistance();
   }
 
   public void shoot(double rpm) {
@@ -73,9 +68,13 @@ public class Shooter extends SubsystemBase {
     shooterHood.set(speed);
   }
 
+  private double getHoodAngle() {
+    return hoodEncoder.getDistance() / 360;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    SmartDashboard.putNumber("Hood Encoder: ", getHoodAngle());
   }
 }
