@@ -13,12 +13,12 @@ import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
 
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.XboxController;
@@ -43,10 +43,10 @@ import frc.robot.subsystems.ExampleSubsystem;
 import frc.robot.subsystems.FrontLeftModule;
 import frc.robot.subsystems.FrontRightModule;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.PiVisionTable;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveGroup;
 import frc.robot.subsystems.SwerveModule;
-import frc.robot.subsystems.PiVisionTable;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -248,6 +248,8 @@ public class RobotContainer {
     xboxController1Start.whenPressed(calibrateGyro);
     xboxController1X.whileHeld(intakeCommand);
     xboxController1Y.whileHeld(reverseIntakePivot);
+    xboxController1RBumper.whileHeld(lowerHood);
+    xboxController1LBumper.whileHeld(raiseHood);
 
     xboxController2A.whileHeld(climberCommand);
     xboxController2B.whileHeld(reverseClimber);
