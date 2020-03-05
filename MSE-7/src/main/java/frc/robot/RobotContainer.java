@@ -83,8 +83,8 @@ public class RobotContainer {
   public static CANSparkMax shooterWheel1;
   public static CANSparkMax shooterWheel2;
   public static WPI_VictorSPX shooterHood;
-  public static WPI_VictorSPX winchMotor;
-  public static TalonFX climberMotor;
+  public static WPI_VictorSPX climberMotor;
+  public static TalonFX winchMotor;
   
   public static TalonFX driveMotor1, driveMotor2; //front right module
   public static TalonFX driveMotor3, driveMotor4; //front left
@@ -160,8 +160,8 @@ public class RobotContainer {
     shooterWheel1 = new CANSparkMax(20, CANSparkMaxLowLevel.MotorType.kBrushless);
     shooterWheel2 = new CANSparkMax(21, CANSparkMaxLowLevel.MotorType.kBrushless);
     shooterHood = new WPI_VictorSPX(9);
-    climberMotor = new TalonFX(12);
-    winchMotor = new WPI_VictorSPX(-1);
+    winchMotor = new TalonFX(12);
+    climberMotor = new WPI_VictorSPX(15);
 
     driveMotor1 = new TalonFX(1);
     driveMotor2 = new TalonFX(2);
@@ -212,8 +212,8 @@ public class RobotContainer {
 
     //climber
     climber = new Climber();
-    climberCommand = new ClimberCommand(1);
-    reverseClimber = new ClimberCommand(-1);
+    climberCommand = new ClimberCommand(0.85);
+    reverseClimber = new ClimberCommand(-0.85);
     winchCommand = new WinchCommand(0.5);
     //reverseWinch = new WinchCommand(-0.5);
 
@@ -234,7 +234,9 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
     xboxController1Start.whenPressed(calibrateGyro);
-    xboxController1X.whileHeld(intakeCommand);
+    //xboxController1Back.whenPressed(calibrateModules);
+    //xboxController1X.whileHeld(intakeCommand);
+    xboxController1B.whileHeld(reverseShooter);
     xboxController1Y.whileHeld(reverseIntakePivot);
 
     xboxController2A.whileHeld(climberCommand);

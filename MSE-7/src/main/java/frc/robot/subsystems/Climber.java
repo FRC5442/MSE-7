@@ -18,8 +18,8 @@ public class Climber extends SubsystemBase {
   /**
    * Creates a new Climber.
    */
-  TalonFX climberMotor;
-  WPI_VictorSPX winchMotor;
+  TalonFX winchMotor;
+  WPI_VictorSPX climberMotor;
 
   public Climber() {
     climberMotor = RobotContainer.climberMotor;
@@ -27,11 +27,11 @@ public class Climber extends SubsystemBase {
   }
 
   public void moveClimber(double speed){
-    climberMotor.set(TalonFXControlMode.PercentOutput, speed);
+    climberMotor.set(speed);
   }
 
   public void moveWinch(double speed) {
-    winchMotor.set(speed);
+    winchMotor.set(TalonFXControlMode.PercentOutput, speed);
   }
 
   @Override
