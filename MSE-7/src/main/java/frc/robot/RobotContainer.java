@@ -17,6 +17,8 @@ import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.XboxController;
@@ -44,6 +46,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveGroup;
 import frc.robot.subsystems.SwerveModule;
+import frc.robot.subsystems.PiVisionTable;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -101,6 +104,8 @@ public class RobotContainer {
 
   public static AHRS navX;
   public static PowerDistributionPanel pdp;
+  public static NetworkTableInstance inst;
+  public static NetworkTable visionTable;
 
   public static SwerveGroup swerveGroup;
   public static SwerveModule frontRightModule, frontLeftModule, backLeftModule, backRightModule;
@@ -126,7 +131,9 @@ public class RobotContainer {
 
   public static CalibrateGyro calibrateGyro;
   public static CalibrateModules calibrateModules;
-  
+
+  public static PiVisionTable piVisionTable;
+
   public RobotContainer() {
     //xbox controllers
     xboxController1 = new Joystick(0);
@@ -184,7 +191,12 @@ public class RobotContainer {
     backLeftAbsEncoder = new AnalogPotentiometer(3, 360, 0);
     backRightAbsEncoder = new AnalogPotentiometer(2, 360, 0);
 
+    inst = NetworkTableInstance.getDefault();
+    visionTable = inst.getTable("5442Vision");
+
     //subsystems and commands
+    
+    piVisionTable = new PiVisionTable();
 
     //drive train
     frontRightModule = new FrontRightModule(driveMotor1, driveMotor2, frontRightAbsEncoder);
