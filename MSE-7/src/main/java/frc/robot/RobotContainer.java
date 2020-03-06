@@ -34,6 +34,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePivot;
 import frc.robot.commands.LowGear;
 import frc.robot.commands.MoveHood;
+import frc.robot.commands.RotateToGoal;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.WinchCommand;
 import frc.robot.subsystems.BackLeftModule;
@@ -123,6 +124,7 @@ public class RobotContainer {
   public static ShootCommand reverseShooter;
   public static MoveHood lowerHood;
   public static MoveHood raiseHood;
+  public static RotateToGoal rotateToGoal;
   
   public static Climber climber;
   public static ClimberCommand climberCommand;
@@ -221,6 +223,7 @@ public class RobotContainer {
     reverseShooter = new ShootCommand(-500); //rpm
     lowerHood = new MoveHood(0.2);
     raiseHood = new MoveHood(-0.2);
+    rotateToGoal = new RotateToGoal(0.35);
 
     //climber
     climber = new Climber();
@@ -245,11 +248,12 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
+    xboxController1B.whenPressed(rotateToGoal);
     xboxController1Start.whenPressed(calibrateGyro);
     xboxController1X.whileHeld(intakePivot);
     xboxController1Y.whileHeld(reverseIntakePivot);
-    xboxController1RBumper.whileHeld(lowerHood);
-    xboxController1LBumper.whileHeld(raiseHood);
+    xboxController1LBumper.whileHeld(lowerHood);
+    xboxController1RBumper.whileHeld(raiseHood);
 
     xboxController2A.whileHeld(climberCommand);
     xboxController2B.whileHeld(reverseClimber);
