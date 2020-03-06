@@ -234,7 +234,7 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
     xboxController1Start.whenPressed(calibrateGyro);
-    //xboxController1Back.whenPressed(calibrateModules);
+    xboxController1Back.whenPressed(calibrateModules);
     //xboxController1X.whileHeld(intakeCommand);
     xboxController1B.whileHeld(reverseShooter);
     xboxController1Y.whileHeld(reverseIntakePivot);
