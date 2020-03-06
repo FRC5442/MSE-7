@@ -123,6 +123,7 @@ public class RobotContainer {
   public static ClimberCommand climberCommand;
   public static ClimberCommand reverseClimber;
   public static WinchCommand winchCommand;
+  public static WinchCommand reverseWinch;
 
   public static CalibrateGyro calibrateGyro;
   public static CalibrateModules calibrateModules;
@@ -212,10 +213,10 @@ public class RobotContainer {
 
     //climber
     climber = new Climber();
-    climberCommand = new ClimberCommand(0.85);
-    reverseClimber = new ClimberCommand(-0.85);
+    climberCommand = new ClimberCommand(0.75);
+    reverseClimber = new ClimberCommand(-0.75);
     winchCommand = new WinchCommand(0.5);
-    //reverseWinch = new WinchCommand(-0.5);
+    reverseWinch = new WinchCommand(-0.5);
 
     //misc commands
     calibrateGyro = new CalibrateGyro();
@@ -234,15 +235,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxController1A.whileHeld(shootCommand);
     xboxController1Start.whenPressed(calibrateGyro);
-    xboxController1Back.whenPressed(calibrateModules);
-    //xboxController1X.whileHeld(intakeCommand);
+    //xboxController1Back.whenPressed(calibrateModules); only enable when testing
     xboxController1B.whileHeld(reverseShooter);
     xboxController1Y.whileHeld(reverseIntakePivot);
 
     xboxController2A.whileHeld(climberCommand);
     xboxController2B.whileHeld(reverseClimber);
-    xboxController2X.whileHeld(winchCommand); 
-    xboxController2Y.whileHeld(calibrateModules); 
+    xboxController2X.whileHeld(winchCommand);
+    xboxController2Y.whileHeld(reverseWinch);
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

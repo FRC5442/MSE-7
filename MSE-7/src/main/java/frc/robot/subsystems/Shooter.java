@@ -33,6 +33,7 @@ public class Shooter extends SubsystemBase {
     wheel1Encoder = shooterWheel1.getEncoder();
     wheel1PIDController = shooterWheel1.getPIDController();
 
+    wheel1PIDController.setFeedbackDevice(wheel1Encoder);
     wheel1PIDController.setP(6e-5);
     wheel1PIDController.setI(0);
     wheel1PIDController.setD(0);
@@ -44,6 +45,7 @@ public class Shooter extends SubsystemBase {
     wheel2Encoder = shooterWheel2.getEncoder();
     wheel2PIDController = shooterWheel2.getPIDController();
 
+    wheel2PIDController.setFeedbackDevice(wheel2Encoder);
     wheel2PIDController.setP(6e-5);
     wheel2PIDController.setI(0);
     wheel2PIDController.setD(0);
@@ -55,9 +57,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shoot(double rpm) {
-    wheel1PIDController.setReference(-rpm * 6, ControlType.kVelocity);
+    //wheel1PIDController.setReference(-rpm * 6, ControlType.kVelocity);
     wheel2PIDController.setReference(rpm * 6, ControlType.kVelocity);
-    System.out.println(wheel1Encoder.getVelocity() + ", " + wheel2Encoder.getVelocity());
+
+    //System.out.println(wheel1Encoder.getVelocity() + ", " + wheel2Encoder.getVelocity());
+    System.out.println(shooterWheel2.getMotorTemperature());;
   }
 
   public void moveHood(double speed) {
