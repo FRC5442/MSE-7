@@ -14,6 +14,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.CSVLogger;
 import frc.robot.RobotContainer;
 
 public class Shooter extends SubsystemBase {
@@ -58,10 +59,16 @@ public class Shooter extends SubsystemBase {
     wheel1PIDController.setReference(-rpm * 6, ControlType.kVelocity);
     wheel2PIDController.setReference(rpm * 6, ControlType.kVelocity);
     System.out.println(wheel1Encoder.getVelocity() + ", " + wheel2Encoder.getVelocity());
+
+    RobotContainer.csvLogger.log("Shooter RPM: ", wheel1Encoder.getVelocity());
   }
 
   public void moveHood(double speed) {
     shooterHood.set(speed);
+  }
+
+  public double getAverageRPM() {
+    return (Math.abs(wheel1Encoder.getVelocity()) + Math.abs(wheel2Encoder.getVelocity())) / 2;
   }
 
   @Override

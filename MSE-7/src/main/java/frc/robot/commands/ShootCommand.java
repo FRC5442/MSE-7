@@ -32,6 +32,9 @@ public class ShootCommand extends CommandBase {
   @Override
   public void execute() {
     RobotContainer.shooter.shoot(rpm);
+    double currentRPM = RobotContainer.shooter.getAverageRPM();
+
+    if (Math.abs(rpm - currentRPM) <= 200) RobotContainer.intake.moveIntake(-0.75);
   }
 
   // Called once the command ends or is interrupted.

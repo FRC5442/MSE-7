@@ -24,15 +24,20 @@ public class CSVLogger {
     }
 
     //Variable is the variable name or the header
-    public void log(String Variable, Double stufftolog) throws IOException {
+    public void log(String Variable, Double stufftolog) {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         String logStuff = (dtf.format(now) + ',' + Variable + ',' + stufftolog);
 
-        FileWriter fileWriter = new FileWriter("log.csv", true);
-        PrintWriter printWriter = new PrintWriter(fileWriter);
-        printWriter.println(logStuff);
-        printWriter.close();
+        try {
+            FileWriter fileWriter = new FileWriter("log.csv", true);
+            PrintWriter printWriter = new PrintWriter(fileWriter);
+            printWriter.println(logStuff);
+            printWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
     }
 
     //Variable is the variable name or the header

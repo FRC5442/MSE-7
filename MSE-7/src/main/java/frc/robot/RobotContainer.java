@@ -33,6 +33,7 @@ import frc.robot.commands.IntakePivot;
 import frc.robot.commands.LowGear;
 import frc.robot.commands.MoveHood;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.SwitchControlMode;
 import frc.robot.commands.WinchCommand;
 import frc.robot.subsystems.BackLeftModule;
 import frc.robot.subsystems.BackRightModule;
@@ -101,6 +102,8 @@ public class RobotContainer {
 
   public static AHRS navX;
   public static PowerDistributionPanel pdp;
+  public static CSVLogger csvLogger;
+  public static boolean controlMode;
 
   public static SwerveGroup swerveGroup;
   public static SwerveModule frontRightModule, frontLeftModule, backLeftModule, backRightModule;
@@ -123,9 +126,11 @@ public class RobotContainer {
   public static ClimberCommand climberCommand;
   public static ClimberCommand reverseClimber;
   public static WinchCommand winchCommand;
+  public static WinchCommand reverseWinch;
 
   public static CalibrateGyro calibrateGyro;
   public static CalibrateModules calibrateModules;
+  public static SwitchControlMode switchControlMode;
   
   public RobotContainer() {
     //xbox controllers
@@ -178,6 +183,8 @@ public class RobotContainer {
     hoodEncoder.setDistancePerPulse(1/360);
 
     navX = new AHRS(SerialPort.Port.kMXP);
+    csvLogger = new CSVLogger();
+    controlMode = true;
 
     frontRightAbsEncoder = new AnalogPotentiometer(0, 360, 0);
     frontLeftAbsEncoder = new AnalogPotentiometer(1, 360, 0);
@@ -215,14 +222,15 @@ public class RobotContainer {
     climberCommand = new ClimberCommand(0.85);
     reverseClimber = new ClimberCommand(-0.85);
     winchCommand = new WinchCommand(0.5);
-    //reverseWinch = new WinchCommand(-0.5);
+    reverseWinch = new WinchCommand(-0.5);
 
     //misc commands
     calibrateGyro = new CalibrateGyro();
     calibrateModules = new CalibrateModules();
+    switchControlMode = new SwitchControlMode();
 
     // Configure the button bindings
-    configureButtonBindings();
+    configureButtonBindings(controlMode);
   }
 
   /**
@@ -231,20 +239,30 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    xboxController1A.whileHeld(shootCommand);
-    xboxController1B.whileHeld(reverseShooter);
+  public static void configureButtonBindings(boolean manualMode) {
     xboxController1X.whileHeld(intakePivot);
     xboxController1Y.whileHeld(reverseIntakePivot);
-    xboxController1LBumper.whileHeld(lowerHood);
-    xboxController1RBumper.whileHeld(raiseHood);
     xboxController1Start.whenPressed(calibrateGyro);
-    //xboxController1Back.whenPressed(calibrateModules);
 
-    xboxController2A.whileHeld(climberCommand);
-    xboxController2B.whileHeld(reverseClimber);
-    xboxController2X.whileHeld(winchCommand); 
-    xboxController2Y.whileHeld(calibrateModules); 
+    xboxController1Back.whenPressed(switchControlMode);
+
+    if (manualMode) {
+      xboxController2A.whileHeld(shootCommand);
+      xboxController2B.whileHeld(reverseShooter);
+      xboxController2LBumper.whileHeld(lowerHood);
+      xboxController2RBumper.whileHeld(raiseHood);
+    }
+    else {
+      xboxController1A.whileHeld(shootCommand);
+      xboxController1B.whileHeld(reverseShooter);
+      xboxController1LBumper.whileHeld(lowerHood);
+      xboxController1RBumper.whileHeld(raiseHood);
+
+      xboxController2A.whileHeld(climberCommand);
+      xboxController2B.whileHeld(reverseClimber);
+      xboxController2X.whileHeld(winchCommand); 
+      xboxController2Y.whileHeld(reverseWinch);
+    }
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

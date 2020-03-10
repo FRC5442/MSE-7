@@ -34,8 +34,7 @@ public class IntakeCommand extends CommandBase {
   @Override
   public void execute() {
     speed = (RobotContainer.xboxController1.getRawAxis(2) / 2) + (-RobotContainer.xboxController1.getRawAxis(3) / 2);
-    RobotContainer.intake.moveIntake(speed);
-    //CSVLogger.intake("Speed", speed);
+    if (RobotContainer.shooter.getAverageRPM() < 200) RobotContainer.intake.moveIntake(speed);
   }
 
   // Called once the command ends or is interrupted.
