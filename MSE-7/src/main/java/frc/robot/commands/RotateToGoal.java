@@ -53,9 +53,9 @@ public class RotateToGoal extends CommandBase {
         convertedSpeed = speed * MathUtil.clamp((yawOffset / 12) * Math.abs(yawOffset / 15), -1, 1);
 
         if (convertedSpeed < speed && yawOffset < 0) {
-          convertedSpeed = -speed;
-        } else if (convertedSpeed < speed && yawOffset > 0) {
           convertedSpeed = speed;
+        } else if (convertedSpeed < speed && yawOffset > 0) {
+          convertedSpeed = -speed;
         }
         RobotContainer.swerveGroup.moveSwerve(new Vector2d(0, 0), convertedSpeed);
         System.out.println("Rotating...(Tape Detected): " + yawOffset + " " + convertedSpeed);

@@ -219,7 +219,7 @@ public class RobotContainer {
 
     //shooter
     shooter = new Shooter();
-    shootCommand = new ShootCommand(5000); //rpm
+    shootCommand = new ShootCommand(2500); //rpm
     reverseShooter = new ShootCommand(-500); //rpm
     lowerHood = new MoveHood(0.2);
     raiseHood = new MoveHood(-0.2);
