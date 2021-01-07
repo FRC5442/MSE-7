@@ -23,7 +23,6 @@ public class RotateToGoal extends CommandBase {
   double speed = 0;
   double convertedSpeed = 0;
   double yawOffset = 0;
-  double rightX = 0.25;
   boolean tapeDetected = false;
   
 
