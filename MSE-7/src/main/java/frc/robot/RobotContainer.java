@@ -233,16 +233,19 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    xboxController1A.whileHeld(shootCommand);
+    xboxController1A.whileHeld(shootCommand);     //works 9/29/2021
     xboxController1Start.whenPressed(calibrateGyro);
     //xboxController1Back.whenPressed(calibrateModules); only enable when testing
-    xboxController1B.whileHeld(reverseShooter);
+    xboxController1B.whileHeld(reverseShooter);    //works 9/29/2021
     xboxController1Y.whileHeld(reverseIntakePivot);
+    xboxController1X.whileHeld(intakePivot);
+    xboxController1LBumper.whileHeld(lowerHood);    //works 9/29/2021
+    xboxController1RBumper.whileHeld(raiseHood);    //works 9/29/2021
 
-    xboxController2A.whileHeld(climberCommand);
-    xboxController2B.whileHeld(reverseClimber);
-    xboxController2X.whileHeld(winchCommand);
-    xboxController2Y.whileHeld(reverseWinch);
+    xboxController2A.whileHeld(climberCommand);   //works 9/29/2021
+    xboxController2B.whileHeld(reverseClimber);   //works 9/29/2021
+    xboxController2X.whileHeld(winchCommand);     //works 9/29/2021
+    xboxController2Y.whileHeld(reverseWinch);     //works 9/29/2021
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

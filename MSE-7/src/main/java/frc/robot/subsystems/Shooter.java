@@ -57,11 +57,11 @@ public class Shooter extends SubsystemBase {
   }
 
   public void shoot(double rpm) {
-    //wheel1PIDController.setReference(-rpm * 6, ControlType.kVelocity);
+    wheel1PIDController.setReference(-rpm * 6, ControlType.kVelocity);
     wheel2PIDController.setReference(rpm * 6, ControlType.kVelocity);
 
-    //System.out.println(wheel1Encoder.getVelocity() + ", " + wheel2Encoder.getVelocity());
-    System.out.println(shooterWheel2.getMotorTemperature());;
+    System.out.println(wheel1Encoder.getVelocity() + ", " + wheel2Encoder.getVelocity());
+    //System.out.println(shooterWheel2.getMotorTemperature());;
   }
 
   public void moveHood(double speed) {
