@@ -237,8 +237,8 @@ public class RobotContainer {
     xboxController1Start.whenPressed(calibrateGyro);
     //xboxController1Back.whenPressed(calibrateModules); only enable when testing
     xboxController1B.whileHeld(reverseShooter);    //works 9/29/2021
-    xboxController1Y.whileHeld(reverseIntakePivot);
-    xboxController1X.whileHeld(intakePivot);
+    xboxController1Y.whileHeld(intakeCommand);
+    //xboxController1X.whileHeld(intakePivot);
     xboxController1LBumper.whileHeld(lowerHood);    //works 9/29/2021
     xboxController1RBumper.whileHeld(raiseHood);    //works 9/29/2021
 
