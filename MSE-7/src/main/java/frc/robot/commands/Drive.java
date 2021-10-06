@@ -32,7 +32,7 @@ public class Drive extends CommandBase {
     double leftX = driveStick.getRawAxis(0);
     double leftY = driveStick.getRawAxis(1);
 
-    double rightX = driveStick.getRawAxis(4);
+    double rightX = driveStick.getRawAxis(2);   //.getRawAxis(4) for xboxController     //.getRawAxis(2) for logitech
 
     Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 1), leftY * Math.pow(Math.abs(leftY), 1));
     //RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 1));

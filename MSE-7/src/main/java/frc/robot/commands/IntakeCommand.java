@@ -33,7 +33,7 @@ public class IntakeCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    speed = (RobotContainer.xboxController1.getRawAxis(2) / 2) + (-RobotContainer.xboxController1.getRawAxis(3) / 2);
+    //speed = (RobotContainer.xboxController1.getRawAxis(2) / 2) + (-RobotContainer.xboxController1.getRawAxis(3) / 2);
     RobotContainer.intake.moveIntake(speed);
     //CSVLogger.intake("Speed", speed);
   }

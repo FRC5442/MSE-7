@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.CalibrateGyro;
 import frc.robot.commands.CalibrateModules;
 import frc.robot.commands.ClimberCommand;
@@ -44,6 +45,7 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.SwerveGroup;
 import frc.robot.subsystems.SwerveModule;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -69,6 +71,16 @@ public class RobotContainer {
   public static JoystickButton xboxController1LStick, xboxController1RStick;
   public static JoystickButton xboxController1Start, xboxController1Back;
 
+  public static Trigger triggerA;
+  public static Trigger triggerB;
+  public static Trigger triggerX;
+  public static Trigger triggerY;
+  public static Trigger triggerBack;
+  public static Trigger triggerBackA;
+  public static Trigger triggerBackB;
+  public static Trigger triggerBackX;
+  public static Trigger triggerBackY;
+
   public static Joystick xboxController2;
   public static JoystickButton xboxController2A;
   public static JoystickButton xboxController2B;
@@ -77,6 +89,30 @@ public class RobotContainer {
   public static JoystickButton xboxController2LBumper, xboxController2RBumper;
   public static JoystickButton xboxController2LStick, xboxController2RStick;
   public static JoystickButton xboxController2Start, xboxController2Back;
+
+  public static JoystickButton logitechTrigger;
+  public static JoystickButton logitechThumb;
+  public static JoystickButton logitech3;
+  public static JoystickButton logitech4;
+  public static JoystickButton logitech5;
+  public static JoystickButton logitech6;
+  public static JoystickButton logitech7;
+  public static JoystickButton logitech8;
+  public static JoystickButton logitech9;
+  public static JoystickButton logitech10;
+  public static JoystickButton logitech11;
+  public static JoystickButton logitech12;
+
+  public static Trigger triggerLogitech3;
+  public static Trigger triggerLogitech4;
+  public static Trigger triggerLogitech5;
+  public static Trigger triggerLogitech6;
+  public static Trigger triggerLogitech8;
+  public static Trigger triggerLogitech83;
+  public static Trigger triggerLogitech84;
+  public static Trigger triggerLogitech85;
+  public static Trigger triggerLogitech86;
+ 
 
   public static WPI_VictorSPX intakePivotMotor;
   public static WPI_VictorSPX intakeMotor;
@@ -142,6 +178,17 @@ public class RobotContainer {
     xboxController1LStick = new JoystickButton(xboxController1, 9);
     xboxController1RStick = new JoystickButton(xboxController1, 10);
 
+    triggerA = new JoystickButton(xboxController1, 1);
+    triggerB = new JoystickButton(xboxController1, 2);
+    triggerX = new JoystickButton(xboxController1, 3);
+    triggerY = new JoystickButton(xboxController1, 4);
+    triggerBack = new JoystickButton(xboxController1, 7);
+
+    triggerBackA = triggerA.and(triggerBack);
+    triggerBackB = triggerB.and(triggerBack);
+    triggerBackX = triggerX.and(triggerBack);
+    triggerBackY = triggerY.and(triggerBack);
+
     xboxController2 = new Joystick(1);
     xboxController2A = new JoystickButton(xboxController2, 1);
     xboxController2B = new JoystickButton(xboxController2, 2);
@@ -153,6 +200,32 @@ public class RobotContainer {
     xboxController2Start = new JoystickButton(xboxController2, 8);
     xboxController2LStick = new JoystickButton(xboxController2, 9);
     xboxController2RStick = new JoystickButton(xboxController2, 10);
+
+    //Button mappings for logitech controller
+
+    logitechTrigger = new JoystickButton(xboxController1, 1);
+    logitechThumb = new Joystickbutton(xboxController1, 2);
+    logitech3 = new JoystickButton(xboxController1, 3);
+    logitech4 = new JoystickButton(xboxController1, 4);
+    logitech5 = new JoystickButton(xboxController1, 5);
+    logitech6 = new JoystickButton(xboxController1, 6);
+    logitech7 = new JoystickButton(xboxController1, 7);
+    logitech8 = new JoystickButton(xboxController1, 8);
+    logitech9 = new JoystickButton(xboxController1, 9);
+    logitech10 = new JoystickButton(xboxController1, 10);
+    logitech11 = new JoystickButton(xboxController1, 11);
+    logitech12 = new JoystickButton(xboxController1, 12);
+
+    triggerLogitech3 = new JoystickButton(xboxController1, 3);
+    triggerLogitech4 = new JoystickButton(xboxController1, 4);
+    triggerLogitech5 = new JoystickButton(xboxController1, 5);
+    triggerLogitech6 = new JoystickButton(xboxController1, 6);
+    triggerLogitech8 = new JoystickButton(xboxController1, 8);
+
+    triggerLogitech83 = triggerLogitech8.and(triggerLogitech3);
+    triggerLogitech84 = triggerLogitech8.and(triggerLogitech4);
+    triggerLogitech85 = triggerLogitech8.and(triggerLogitech5);
+    triggerLogitech86 = triggerLogitech8.and(triggerLogitech6);
 
 
     //speed controllers
@@ -179,6 +252,7 @@ public class RobotContainer {
     hoodEncoder.setDistancePerPulse(1/360);
 
     navX = new AHRS(SerialPort.Port.kMXP);
+    
 
     frontRightAbsEncoder = new AnalogPotentiometer(0, 360, 0);
     frontLeftAbsEncoder = new AnalogPotentiometer(1, 360, 0);
@@ -200,7 +274,8 @@ public class RobotContainer {
 
     //intake
     intake = new Intake();
-    intakeCommand = new IntakeCommand(1);
+    intakeCommand = new IntakeCommand(1);   //changed
+    reverseIntake = new IntakeCommand(-0.5);
     intakePivot = new IntakePivot(0.4);
     reverseIntakePivot = new IntakePivot(-0.4);
 
@@ -221,9 +296,8 @@ public class RobotContainer {
     //misc commands
     calibrateGyro = new CalibrateGyro();
     calibrateModules = new CalibrateModules();
-
     // Configure the button bindings
-    configureButtonBindings();
+    configureLogitechBindings();
   }
 
   /**
@@ -232,20 +306,42 @@ public class RobotContainer {
    * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
-  private void configureButtonBindings() {
-    xboxController1A.whileHeld(shootCommand);     //works 9/29/2021
-    xboxController1Start.whenPressed(calibrateGyro);
-    //xboxController1Back.whenPressed(calibrateModules); only enable when testing
-    xboxController1B.whileHeld(reverseShooter);    //works 9/29/2021
-    xboxController1Y.whileHeld(intakeCommand);
-    //xboxController1X.whileHeld(intakePivot);
-    xboxController1LBumper.whileHeld(lowerHood);    //works 9/29/2021
-    xboxController1RBumper.whileHeld(raiseHood);    //works 9/29/2021
 
-    xboxController2A.whileHeld(climberCommand);   //works 9/29/2021
-    xboxController2B.whileHeld(reverseClimber);   //works 9/29/2021
-    xboxController2X.whileHeld(winchCommand);     //works 9/29/2021
-    xboxController2Y.whileHeld(reverseWinch);     //works 9/29/2021
+  
+  public static void configureButtonBindings() {
+    
+      xboxController1A.whileHeld(shootCommand);
+      //xboxController1Start.whenPressed(calibrateGyro);
+      //xboxController1Back.whenPressed(calibrateModules); only enable when testing
+      xboxController1B.whileHeld(reverseShooter);    
+      xboxController1Y.whileHeld(intakeCommand);
+      //xboxController1X.whileHeld(intakePivot);
+      xboxController1LBumper.whileHeld(lowerHood);
+      xboxController1RBumper.whileHeld(raiseHood);
+
+
+      triggerBackA.whileActiveContinuous(climberCommand);
+      triggerBackB.whileActiveContinuous(reverseClimber);
+      triggerBackX.whileActiveContinuous(winchCommand);
+      triggerBackY.whileActiveContinuous(reverseWinch);
+  }
+
+  public static void configureLogitechBindings() {
+      logitechTrigger.whileHeld(shootCommand);
+      logitechThumb.whileHeld(intakeCommand);
+      logitech12.whileHeld(raiseHood);
+      logitech11.whileHeld(lowerHood);
+      logitech5.whileHeld(reverseShooter);
+      logitech6.whileHeld(reverseIntake);
+      logitech9.whileHeld(intakePivot);
+      logitech10.whileHeld(reverseIntakePivot);
+
+      //endgame commands
+      triggerLogitech85.whileHeld(climberCommand);
+      triggerLogitech83.whileHeld(reverseClimber);
+      triggerLogitech86.whileHeld(winchCommand);
+      triggerLogitech84.whileHeld(reverseWinch);
+
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
