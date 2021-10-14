@@ -35,6 +35,7 @@ import frc.robot.commands.LowGear;
 import frc.robot.commands.MoveHood;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.WinchCommand;
+import frc.robot.commands.MoveCrabButton;
 import frc.robot.subsystems.BackLeftModule;
 import frc.robot.subsystems.BackRightModule;
 import frc.robot.subsystems.Climber;
@@ -146,6 +147,7 @@ public class RobotContainer {
 
   public static Intake intake;
   public static IntakeCommand intakeCommand;
+  public static IntakeCommand reverseIntake;
   public static IntakePivot intakePivot;
   public static IntakePivot reverseIntakePivot;
 
@@ -160,6 +162,11 @@ public class RobotContainer {
   public static ClimberCommand reverseClimber;
   public static WinchCommand winchCommand;
   public static WinchCommand reverseWinch;
+
+  public static MoveCrabButton moveCrabLeft;
+  public static MoveCrabButton moveCrabRight;
+
+
 
   public static CalibrateGyro calibrateGyro;
   public static CalibrateModules calibrateModules;
@@ -202,9 +209,10 @@ public class RobotContainer {
     xboxController2RStick = new JoystickButton(xboxController2, 10);
 
     //Button mappings for logitech controller
+    
 
     logitechTrigger = new JoystickButton(xboxController1, 1);
-    logitechThumb = new Joystickbutton(xboxController1, 2);
+    logitechThumb = new JoystickButton(xboxController1, 2);
     logitech3 = new JoystickButton(xboxController1, 3);
     logitech4 = new JoystickButton(xboxController1, 4);
     logitech5 = new JoystickButton(xboxController1, 5);
@@ -226,6 +234,7 @@ public class RobotContainer {
     triggerLogitech84 = triggerLogitech8.and(triggerLogitech4);
     triggerLogitech85 = triggerLogitech8.and(triggerLogitech5);
     triggerLogitech86 = triggerLogitech8.and(triggerLogitech6);
+    
 
 
     //speed controllers
@@ -274,8 +283,8 @@ public class RobotContainer {
 
     //intake
     intake = new Intake();
-    intakeCommand = new IntakeCommand(1);   //changed
-    reverseIntake = new IntakeCommand(-0.5);
+    intakeCommand = new IntakeCommand(-1);   //changed
+    reverseIntake = new IntakeCommand(0.5);
     intakePivot = new IntakePivot(0.4);
     reverseIntakePivot = new IntakePivot(-0.4);
 
@@ -296,7 +305,12 @@ public class RobotContainer {
     //misc commands
     calibrateGyro = new CalibrateGyro();
     calibrateModules = new CalibrateModules();
+
+    moveCrabLeft = new MoveCrabButton(0.75);
+    moveCrabRight = new MoveCrabButton(-0.75);
+
     // Configure the button bindings
+    //configureLogitechBindings();
     configureLogitechBindings();
   }
 
@@ -314,7 +328,7 @@ public class RobotContainer {
       //xboxController1Start.whenPressed(calibrateGyro);
       //xboxController1Back.whenPressed(calibrateModules); only enable when testing
       xboxController1B.whileHeld(reverseShooter);    
-      xboxController1Y.whileHeld(intakeCommand);
+      //xboxController1Y.whileHeld(intakeCommand);
       //xboxController1X.whileHeld(intakePivot);
       xboxController1LBumper.whileHeld(lowerHood);
       xboxController1RBumper.whileHeld(raiseHood);
@@ -333,14 +347,19 @@ public class RobotContainer {
       logitech11.whileHeld(lowerHood);
       logitech5.whileHeld(reverseShooter);
       logitech6.whileHeld(reverseIntake);
-      logitech9.whileHeld(intakePivot);
-      logitech10.whileHeld(reverseIntakePivot);
+
+      //Rotate Crab buttons
+      logitech3.whileHeld(moveCrabLeft);
+      logitech4.whileHeld(moveCrabRight);
+      //logitech9.whileHeld(intakePivot);
+      //logitech10.whileHeld(reverseIntakePivot);
+      //logitech10.whenPressed(calibrateModules);    Only enable for testing
 
       //endgame commands
-      triggerLogitech85.whileHeld(climberCommand);
-      triggerLogitech83.whileHeld(reverseClimber);
-      triggerLogitech86.whileHeld(winchCommand);
-      triggerLogitech84.whileHeld(reverseWinch);
+      triggerLogitech85.whileActiveContinuous(climberCommand);
+      triggerLogitech83.whileActiveContinuous(reverseClimber);
+      triggerLogitech86.whileActiveContinuous(winchCommand);
+      triggerLogitech84.whileActiveContinuous(reverseWinch);
 
   }
   /**
