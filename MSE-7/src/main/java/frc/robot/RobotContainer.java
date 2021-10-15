@@ -209,7 +209,7 @@ public class RobotContainer {
     xboxController2RStick = new JoystickButton(xboxController2, 10);
 
     //Button mappings for logitech controller
-    
+    /*
 
     logitechTrigger = new JoystickButton(xboxController1, 1);
     logitechThumb = new JoystickButton(xboxController1, 2);
@@ -234,6 +234,8 @@ public class RobotContainer {
     triggerLogitech84 = triggerLogitech8.and(triggerLogitech4);
     triggerLogitech85 = triggerLogitech8.and(triggerLogitech5);
     triggerLogitech86 = triggerLogitech8.and(triggerLogitech6);
+
+    */
     
 
 
@@ -311,7 +313,7 @@ public class RobotContainer {
 
     // Configure the button bindings
     //configureLogitechBindings();
-    configureLogitechBindings();
+    configureButtonBindings();
   }
 
   /**
@@ -325,11 +327,11 @@ public class RobotContainer {
   public static void configureButtonBindings() {
     
       xboxController1A.whileHeld(shootCommand);
-      //xboxController1Start.whenPressed(calibrateGyro);
+      xboxController1Start.whenPressed(calibrateGyro);
       //xboxController1Back.whenPressed(calibrateModules); only enable when testing
       xboxController1B.whileHeld(reverseShooter);    
       //xboxController1Y.whileHeld(intakeCommand);
-      //xboxController1X.whileHeld(intakePivot);
+      //xboxController1X.whileHeld(reverseIntake);
       xboxController1LBumper.whileHeld(lowerHood);
       xboxController1RBumper.whileHeld(raiseHood);
 
@@ -339,7 +341,7 @@ public class RobotContainer {
       triggerBackX.whileActiveContinuous(winchCommand);
       triggerBackY.whileActiveContinuous(reverseWinch);
   }
-
+/*
   public static void configureLogitechBindings() {
       logitechTrigger.whileHeld(shootCommand);
       logitechThumb.whileHeld(intakeCommand);
@@ -361,7 +363,7 @@ public class RobotContainer {
       triggerLogitech86.whileActiveContinuous(winchCommand);
       triggerLogitech84.whileActiveContinuous(reverseWinch);
 
-  }
+  } */
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

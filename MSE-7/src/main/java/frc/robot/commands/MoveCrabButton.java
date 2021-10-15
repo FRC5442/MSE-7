@@ -34,8 +34,8 @@ double crabDirection;
   public void execute() {
     
     Drive.rightX = crabDirection;
-    Drive.leftX = 0;
-    Drive.leftY = 0;
+    //Drive.leftX = 0;
+    //Drive.leftY = 0;
   }
 
   // Called once the command ends or is interrupted.

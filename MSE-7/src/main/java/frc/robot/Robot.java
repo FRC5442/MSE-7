@@ -95,8 +95,9 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    RobotContainer.calibrateGyro.schedule();
+    //RobotContainer.calibrateGyro.schedule();
     RobotContainer.drive.schedule();
+    RobotContainer.intakeCommand.schedule();
     //RobotContainer.intakeCommand.schedule();
   }
 
