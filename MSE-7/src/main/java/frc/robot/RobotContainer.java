@@ -369,9 +369,20 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
-  public Command getAutonomousCommand() {
-    // An ExampleCommand will run in autonomous
 
-    return m_autoCommand;
+  public Command getAutonomousCommand() {
+    //"active" equal to 0 does not run code, 1 does
+    //CODE: double active = 0;
+   
+    // An ExampleCommand will run in autonomous
+    //First stage: move forward at HALF speed, and at STRAIGHT (Either 0 or 180) angle, and for ROBOT SIZE distance
+    //CODE: TranslateDistance.TranslateDistance(Speed, Angle, Distance)
+    
+    //Second stage: raise/lower hood to aim at holes
+    
+    
+    //Third stage: run firing motor / wait / run intake
+     
+     return m_autoCommand;
   }
 }
