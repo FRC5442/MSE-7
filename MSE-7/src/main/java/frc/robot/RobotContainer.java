@@ -377,6 +377,8 @@ public class RobotContainer {
     // An ExampleCommand will run in autonomous
     //First stage: move forward at HALF speed, and at STRAIGHT (Either 0 or 180) angle, and for ROBOT SIZE distance
     //CODE: TranslateDistance.TranslateDistance(Speed, Angle, Distance)
+    //OR: moveSwerve(Vector2D(x, y), rotation)
+      
     
     //Second stage: raise/lower hood to aim at holes
     
