@@ -371,21 +371,21 @@ public class RobotContainer {
    */
 
   public Command getAutonomousCommand() {
-    //"active" equal to 0 does not run code, 1 does
+    //"active" equal to 0 does not run FIRING code, 1 does (Movement runs either way)
     double active = 0;
 
-    if(active === 1){
-
     //First stage: move forward at HALF speed, and at STRAIGHT (Either 0 or 180) angle, and for ROBOT SIZE distance
-    addSequential(moveSwerve(Vector2D(x, y), 0)) //Moves swerve in speed/distance at angle
+    addSequential(TimedCommand(moveSwerve(Vector2D(x, y), 0), 3)) //Moves swerve in speed/distance? at angle for 3 seconds
     
+    if(active === 1){
+      
     //Second stage: raise/lower hood to aim at holes
-    addSequential(MoveHood(-X DEGREES)) //Raises the hood X degrees to fire
+    addSequential(new MoveHood(-X DEGREES)) //Raises the hood X degrees to fire
     
     //Third stage: run firing motor / wait / run intake
-    addSequential(TimedCommand(ShootCommand(5000), SECONDS)) //Runs shoot command at 5000 rpm
-    addSequential(WaitCommand(3)) //Waits 3 seconds
-    addSequential(TimedCommand(IntakeCommand(1), SECONDS)) //Advances ball
+    addSequential(new TimedCommand(ShootCommand(5000), 15.00)) //Runs shoot command at 5000 rpm (Standard speed) for 15 seconds
+    addSequential(new WaitCommand(3.00)) //Waits 3 seconds
+    addSequential(new TimedCommand(IntakeCommand(1), 12.00)) //Advances ball for 10 seconds
     }
       return m_autoCommand;
   }
