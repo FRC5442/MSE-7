@@ -36,6 +36,7 @@ import frc.robot.commands.MoveHood;
 import frc.robot.commands.ShootCommand;
 import frc.robot.commands.WinchCommand;
 import frc.robot.commands.MoveCrabButton;
+import frc.robot.commands.PartyHardAutonomousCommand;
 import frc.robot.subsystems.BackLeftModule;
 import frc.robot.subsystems.BackRightModule;
 import frc.robot.subsystems.Climber;
@@ -59,6 +60,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
+  //private final AutonomousCommand m_autoCommand = new AutonomousCommand();                         //Auto Code
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -81,6 +83,11 @@ public class RobotContainer {
   public static Trigger triggerBackB;
   public static Trigger triggerBackX;
   public static Trigger triggerBackY;
+  public static Trigger triggerOnlyA;
+  public static Trigger triggerOnlyB;
+  public static Trigger triggerOnlyX;
+  public static Trigger triggerOnlyY;
+  public static Trigger triggerNoBack;
 
   public static Joystick xboxController2;
   public static JoystickButton xboxController2A;
@@ -191,10 +198,17 @@ public class RobotContainer {
     triggerY = new JoystickButton(xboxController1, 4);
     triggerBack = new JoystickButton(xboxController1, 7);
 
+    triggerNoBack = triggerBack.negate();
+
     triggerBackA = triggerA.and(triggerBack);
     triggerBackB = triggerB.and(triggerBack);
     triggerBackX = triggerX.and(triggerBack);
     triggerBackY = triggerY.and(triggerBack);
+
+    triggerOnlyA = triggerA.and(triggerNoBack);
+    triggerOnlyB = triggerB.and(triggerNoBack);
+    triggerOnlyX = triggerX.and(triggerNoBack);
+    triggerOnlyY = triggerY.and(triggerNoBack);
 
     xboxController2 = new Joystick(1);
     xboxController2A = new JoystickButton(xboxController2, 1);
@@ -292,7 +306,7 @@ public class RobotContainer {
 
     //shooter
     shooter = new Shooter();
-    shootCommand = new ShootCommand(5000); //rpm
+    shootCommand = new ShootCommand(2700); //rpm
     reverseShooter = new ShootCommand(-500); //rpm
     lowerHood = new MoveHood(0.2);
     raiseHood = new MoveHood(-0.2);
@@ -326,15 +340,19 @@ public class RobotContainer {
   
   public static void configureButtonBindings() {
     
-      xboxController1A.whileHeld(shootCommand);
+      //xboxController1A.whileHeld(shootCommand);
       xboxController1Start.whenPressed(calibrateGyro);
       //xboxController1Back.whenPressed(calibrateModules); only enable when testing
-      xboxController1B.whileHeld(reverseShooter);    
+      //xboxController1B.whileHeld(reverseShooter);    
       //xboxController1Y.whileHeld(intakeCommand);
       //xboxController1X.whileHeld(reverseIntake);
       xboxController1LBumper.whileHeld(lowerHood);
       xboxController1RBumper.whileHeld(raiseHood);
 
+      triggerOnlyA.whileActiveContinuous(shootCommand);
+      triggerOnlyB.whileActiveContinuous(reverseShooter);
+      triggerOnlyX.whileActiveContinuous(reverseIntakePivot);
+      triggerOnlyY.whileActiveContinuous(intakePivot);
 
       triggerBackA.whileActiveContinuous(climberCommand);
       triggerBackB.whileActiveContinuous(reverseClimber);
@@ -371,7 +389,6 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An ExampleCommand will run in autonomous
-
-    return m_autoCommand;
+    return new PartyHardAutonomousCommand();
   }
 }

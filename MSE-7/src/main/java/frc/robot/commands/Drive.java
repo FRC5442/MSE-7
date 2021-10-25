@@ -16,10 +16,25 @@ public class Drive extends CommandBase {
 
   public static double rightX; //The variable to be accessed by "MoveCrabButton" Command with a + or - value
 
+  private double leftX ;//0
+  private double leftY ;
+
+  private boolean useAuto = false;
+
 
   public Drive() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(RobotContainer.swerveGroup);
+    useAuto = false;
+  }
+
+  // auto contructor
+  public Drive(double _leftX, double _leftY, double _rightX) {
+    // Use addRequirements() here to declare subsystem dependencies.
+    addRequirements(RobotContainer.swerveGroup);
+    useAuto = true;
+    leftX = _leftX;
+
   }
 
   // Called when the command is initially scheduled.
@@ -30,17 +45,31 @@ public class Drive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    Joystick driveStick = RobotContainer.xboxController1;
+    if(!useAuto)
+    {
+      Joystick driveStick = RobotContainer.xboxController1;
 
-    double leftX = driveStick.getRawAxis(0); //0
-    double leftY = driveStick.getRawAxis(1);  //1
+      leftX = driveStick.getRawAxis(0); //0
+      leftY = driveStick.getRawAxis(1);  //1
 
-    //double rightX = driveStick.getRawAxis(2)*-1;   //.getRawAxis(4) for xboxController     //.getRawAxis(2) for logitech
-    double rightX = driveStick.getRawAxis(4);   //.getRawAxis(4) for xboxController     //.getRawAxis(2) for logitech
-    
+      //double rightX = driveStick.getRawAxis(2)*-1;   //.getRawAxis(4) for xboxController     //.getRawAxis(2) for logitech
+      rightX = driveStick.getRawAxis(4);   //.getRawAxis(4) for xboxController     //.getRawAxis(2) for logitech
+      
 
-    Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 1), leftY * Math.pow(Math.abs(leftY), 1));
-    RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 1));
+      Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 1), leftY * Math.pow(Math.abs(leftY), 1));
+      RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 1));
+    }
+    else{
+      leftX = 0.0; //0
+      leftY = 0.5;  //1
+
+      //double rightX = driveStick.getRawAxis(2)*-1;   //.getRawAxis(4) for xboxController     //.getRawAxis(2) for logitech
+      rightX = 0.0;   //.getRawAxis(4) for xboxController     //.getRawAxis(2) for logitech
+      
+
+      Vector2d translation = new Vector2d(leftX * Math.pow(Math.abs(leftX), 1), leftY * Math.pow(Math.abs(leftY), 1));
+      RobotContainer.swerveGroup.moveSwerve(translation, rightX * Math.pow(Math.abs(rightX), 1));
+    }
 
     /*
 

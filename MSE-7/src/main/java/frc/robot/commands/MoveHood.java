@@ -34,7 +34,17 @@ public class MoveHood extends CommandBase {
   public void execute() {
     //double speed = (RobotContainer.hoodEncoder.getDistance() - distance) / 100;
 
-    RobotContainer.shooter.moveHood(speed);
+    if (RobotContainer.hoodEncoder.getDistance() < 40 && speed > 0){
+      RobotContainer.shooter.moveHood(0);
+    }else if (RobotContainer.hoodEncoder.getDistance() > 340 && speed < 0){
+      RobotContainer.shooter.moveHood(0);
+    } else {
+      RobotContainer.shooter.moveHood(speed);
+    }
+    
+    int hoodEncoderValue = (int) Math.round(RobotContainer.hoodEncoder.getDistance() / 20);
+    
+    SmartDashboard.putNumber("THE REAL HOOD ENCODER", hoodEncoderValue);
   }
 
   // Called once the command ends or is interrupted.
